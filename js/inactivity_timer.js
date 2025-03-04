@@ -1,5 +1,5 @@
 // Set the inactivity timeout (in milliseconds)
-const INACTIVITY_TIMEOUT = 60000; // 5 minutes (5 * 60 * 1000)
+const INACTIVITY_TIMEOUT = 300000; // 5 minutes (5 * 60 * 1000)
 
 let inactivityTimer;
 
