@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #018ABD;
+    color: #004581;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: #DDE8F0;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-container h2 {
+    color: #004581;
+    padding: 15px;
+    text-align: center;
+    margin: -2rem -2rem 1rem -2rem;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bolder;
+    font-style: normal;
+}
+
+.login-container i {
+    color: #004581;
+    padding: 15px;
+    text-align: center;
+    margin: -2rem -2rem 1rem -2rem;
+}
+
+.form-control {
+    border: 1px solid #97CBDC;
+}
+
+.btn-primary {
+    background-color: #004581;
+    border-color: #004581;
+    width: 45%;
+}
+
+.btn-primary:hover {
+    background-color: #018ABD;
+    border-color: #018ABD;
+}
+
+.btn-secondary {
+    background-color: #97CBDC;
+    border-color: #97CBDC;
+    width: 45%;
+}
+
+.btn-secondary:hover {
+    background-color: #018ABD;
+    border-color: #018ABD;
+}
+
+.forgot-password {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #004581;
+}
+
+.forgot-password:hover {
+    color: #018ABD;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 1rem;
+    font-size: 3rem !important;
+}
+
+hr {
+    margin: 1rem 0;
+    color: inherit;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: .25;
+}
+
+label {
+    font-weight: 100 !important;
+}

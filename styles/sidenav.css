@@ -1,0 +1,133 @@
+aside {
+    background-color: #97CBDC !important;
+}
+
+.logout-container {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.logout-btn {
+    color: #007bff;
+    margin-top: 0;
+    width: auto;
+}
+
+.logout-btn:hover {
+    background-color: #f8d7da !important;
+    color: #dc3545 !important;
+}
+
+.logout-btn a {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.main-sidebar {
+    height: 100vh;
+}
+
+.sidenav-loader {
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #97CBDC;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    z-index: 10; */
+}
+
+/* .loader-user-panel {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    margin-bottom: 20px;
+} */
+
+.loader-avatar {
+    width: 3vw;
+    height: 6vh;
+    /* border-radius: 50%; */
+    margin-left: 0.5vw;
+    background: #e0e0e0;
+    animation: shimmer 1.5s infinite;
+}
+
+.loader-user-name {
+    width: 70%;
+    /* height: 12px; */
+    background: #e0e0e0;
+    margin-left: .5vw;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+.loader-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.loader-menu-item {
+    width: 80%;
+    height: 2.0rem;
+    align-self: center;
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+.loader-line {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.loader-line::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -150px;
+    width: 150px;
+    height: 100%;
+    background: linear-gradient(to right, #e0e0e0 0%, #f5f5f5 50%, #e0e0e0 100%);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        left: -150px;
+    } 50% {
+        left: 100%;
+    } 100% {
+        left: 100%;
+    }
+}
+
+/* Logout Button Placeholder */
+.loader-logout {
+    margin-top: auto;
+    width: 80%;
+    height: 2.0rem;
+    align-items: center;
+    background: #e0e0e0;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: 200px 0;
+    }
+}
