@@ -350,6 +350,41 @@
             $(settingsModal).modal('show');
         });
 
+        function to24Hour(time12h) {
+            const [time, modifier] = time12h.split(' ');
+            let [hours, minutes] = time.split(':');
+
+            if (hours === '12') {
+                hours = '00';
+            }
+
+            if (modifier === 'PM') {
+                hours = parseInt(hours, 10) + 12;
+            }
+
+            return `${hours}:${minutes}`;
+        }
+
+        function to12Hour(time24h) {
+            let [hours, minutes] = time24h.split(':');
+            let modifier = 'AM';
+
+            if (hours >= 12) {
+                modifier = 'PM';
+                if (hours > 12) {
+                    hours -= 12;
+                }
+            }
+            
+            if (hours === '00'){
+                hours = 12;
+            }
+
+            hours = String(hours).padStart(2, '0'); // Ensure two digits
+
+            return `${hours}:${minutes} ${modifier}`;
+        }
+
         // Fetch user information and populate the modal
         function populateUserSettings() {
             $.ajax({
@@ -413,31 +448,39 @@
         });
 
         $('#save_settings').click(function() {
-        const userData = {
-            salutation: $('#salutation').val(),
-            firstName: $('#firstName').val(),
-            lastName: $('#lastName').val(),
-            address: $('#address').val(),
-            dob: $('#dob').val(),
-            primaryNumber: $('#phoneNumber').val(),
-            primaryEmail: $('#primaryEmail').val(),
-            position: $('#position').val(),
-            specialization: $('#specialization').val(),
-            secondaryNumber: $('#secondaryNumber').val(),
-            secondaryEmail: $('#secondaryEmail').val(),
-            weekdayHours: $('#weekdayHours').val(),
-            weekendHours: $('#weekendHours').val(),
-            accountStatus: $('#accountStatus').val(),
-            salary: $('#salary').val(),
-            username: $('#username').val(),
-            password: $('#password').val(), // Consider hashing the password on the server-side
-            emergencyContactFirstName: $('#emergencyContactFirstName').val(),
-            emergencyContactLastName: $('#emergencyContactLastName').val(),
-            emergencyContactNumber: $('#emergencyContactNumber').val(),
-            emergencyContactAddress: $('#emergencyContactAddress').val()
-        };
+            // Convert times to 24-hour format before sending
+            const weekdayStartHours24 = to24Hour($('#weekdayStartHours').val());
+            const weekdayEndHours24 = to24Hour($('#weekdayEndHours').val());
+            const weekendStartHours24 = to24Hour($('#weekendStartHours').val());
+            const weekendEndHours24 = to24Hour($('#weekendEndHours').val());
 
-         $.ajax({
+            const userData = {
+                salutation: $('#salutation').val(),
+                firstName: $('#firstName').val(),
+                lastName: $('#lastName').val(),
+                address: $('#address').val(),
+                dob: $('#dob').val(),
+                primaryNumber: $('#phoneNumber').val(),
+                primaryEmail: $('#primaryEmail').val(),
+                position: $('#position').val(),
+                specialization: $('#specialization').val(),
+                secondaryNumber: $('#secondaryNumber').val(),
+                secondaryEmail: $('#secondaryEmail').val(),
+                weekdayStartHours: weekdayStartHours24, // Use converted values
+                weekdayEndHours: weekdayEndHours24,     // Use converted values
+                weekendStartHours: weekendStartHours24, // Use converted values
+                weekendEndHours: weekendEndHours24,     // Use converted values
+                accountStatus: $('#accountStatus').val(),
+                salary: $('#salary').val(),
+                username: $('#username').val(),
+                password: $('#password').val(), // Consider hashing the password on the server-side
+                emergencyContactFirstName: $('#emergencyContactFirstName').val(),
+                emergencyContactLastName: $('#emergencyContactLastName').val(),
+                emergencyContactNumber: $('#emergencyContactNumber').val(),
+                emergencyContactAddress: $('#emergencyContactAddress').val()
+            };
+
+            $.ajax({
                 url: '../partials/update_user_info.php',
                 type: 'POST',
                 data: userData,
