@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Redirect root requests (direct access to the folder) to the login page
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/a/?\sHTTP/ [NC]
+RewriteRule ^$ /a/auth/login.php [R=301,L]
+
+# Redirect any direct access to the root folder (e.g., /a) to login
+RewriteRule ^a/?$ /a/auth/login.php [R=301,L]
+

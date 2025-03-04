@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #004581;
+        }
+        .form-section {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .form-section label {
+            font-weight: bold;
+        }
+        .form-section div {
+            margin-bottom: 10px;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #004581;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Halisi Family Hospital</h1>
+        <h2>User Information</h2>
+
+        <!-- Doctor Details Form -->
+        <div class="form-section">
+            <h3>Personal Details for User [ID]</h3>
+            <hr>
+
+            <br>
+
+            <table style="border-style: dotted;">
+                <tr>
+                    <td>
+                        <label for="salutation">Salutation:</label>
+                        <span id="salutation">[Salutation]</span>
+                    </td>
+                    <td>
+                        <label for="name">Name:</label>
+                        <span id="name">[Name]</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="position">Position:</label>
+                        <span id="position">[Position]</span>
+                    </td>
+                    <td>
+                        <label for="specialization">Specialization:</label>
+                        <span id="specialization">[Specialization]</span>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <label for="dob">Date of Birth:</label>
+                        <span id="dob">[DOB]</span>
+                    </td>
+                    <td>
+                        <label for="address">Address:</label>
+                        <span id="address">[Address]</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="email">Primary Email:</label>
+                        <span id="email">[Email]</span>
+                    </td>
+                    <td>
+                        <label for="number">Primary Number:</label>
+                        <span id="number">[Number]</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="secondaryNumber">Secondary Number:</label>
+                        <span id="secondaryNumber">[SecondaryNumber]</span>
+                    </td>
+                    <td>
+                        <label for="secondaryEmail">Secondary Email:</label>
+                        <span id="secondaryEmail">[SecondaryEmail]</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="workingHoursWeekdays">Working Hours (Weekdays):</label>
+                        <span id="workingHoursWeekdays">[WorkingHoursWeekdays]</span>
+                    </td>
+                    <td>
+                        <label for="workingHoursWeekends">Working Hours (Weekends):</label>
+                    <span id="workingHoursWeekends">[WorkingHoursWeekends]</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="status">Account Status:</label>
+                        <span id="status">[Status]</span>
+                    </td>
+                    <td>
+                        <label for="salary">Salary:</label>
+                        <span id="salary">[Salary]</span>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+            <hr>
+
+            <div class="table-container">
+                <h3>Patients Attended/Declined</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>123</td>
+                            <td>John Doe</td>
+                            <td>john.doe@example.com</td>
+                            <td>+254700000001</td>
+                            <td>Attended</td>
+                            <td>01/11/2024</td>
+                        </tr>
+                        <tr>
+                            <td>124</td>
+                            <td>Jane Smith</td>
+                            <td>jane.smith@example.com</td>
+                            <td>+254700000002</td>
+                            <td>Declined</td>
+                            <td>03/11/2024</td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="footer">
+                <p>Generated on [Current Date and Time]</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

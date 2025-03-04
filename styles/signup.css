@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #018ABD;
+    color: #004581;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    height: auto;
+    margin: 0;
+}
+
+.signup-container {
+    background-color: #DDE8F0;
+    padding: 2rem;
+    margin: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+}
+
+h2 {
+    color: #004581;
+    padding: 15px;
+    text-align: center;
+    margin: -2rem -2rem -1rem -2rem;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bolder;
+    font-style: normal;
+}
+
+.form-control {
+    border: 1px solid #97CBDC;
+}
+
+.btn-primary {
+    background-color: #004581;
+    border-color: #004581;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #018ABD;
+    border-color: #018ABD;
+}
+
+.back-to-login {
+    display: block;
+    text-align: center;
+    align-self: center;
+    color: #004581;
+}
+
+.back-to-login:hover {
+    color: #018ABD;
+}
+
+.separator {
+    margin: 1rem 0;
+}
+
+hr {
+    margin: 1rem 0;
+    color: inherit;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: .25;
+}
+
+label {
+    font-weight: 100 !important;
+}

@@ -1,0 +1,118 @@
+/* .skeleton-loader {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.skeleton {
+    height: 20px;
+    width: 100%;
+    background: #e0e0e0;
+    border-radius: 4px;
+    animation: shimmer 1.5s infinite linear;
+}
+
+.skeleton-text {
+    height: 20px;
+    margin-bottom: 15px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: 200px 0;
+    }
+}
+
+.d-none {
+    display: none;
+} */
+
+/* #filter-section {
+    width: 50vw;
+    margin: 0 auto;
+}
+
+#filter-section .col-md-4 {
+    margin-bottom: 10px;
+} */
+
+.custom-multiselect {
+    position: relative;
+}
+
+.dropdown-button {
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdown-options {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.dropdown-options label {
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.dropdown-options label:hover {
+    background-color: #f9f9f9;
+}
+
+.dropdown-options input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.dropdown-options.show {
+    display: block;
+}
+
+
+#pagination {
+    display: flex;
+    justify-content: end !important;
+    gap: 5px;
+    padding: 10px 0;
+}
+
+#pagination button {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#pagination button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+#pagination button.disabled {
+    background-color: #f8f9fa;
+    color: #ddd;
+    cursor: not-allowed;
+}
+
+#pagination button:hover:not(.disabled) {
+    background-color: #0069d9;
+    color: white;
+}
+
