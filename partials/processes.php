@@ -304,17 +304,17 @@
 
     elseif (isset($_POST['save_appointment'])) {
         $patientID = $_POST['patientID'];
-        $firstName = $_POST['firstName'];
-        $lastname = $_POST['lastname'];
-        $email = $_POST['patientEmail'];
-        $phoneNumber = $_POST['phoneNumber'];
-        $dob = $_POST['dob'];
-        $yob = $_POST[new Date(document.getElementById('dob').value).getFullYear()];
-        $visitFor = $_POST['visitFor'];
-        $docAssigned = $_POST['docAssigned'];
-        $dateOfAppointment = $_POST['dateOfAppointment'];
-        $timeOfAppointment = $_POST['timeOfAppointment'];
-        $status = $_POST['status'];
+        $firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
+        $lastname = isset($_POST['lastname']) ? $_POST['lastname'] : '';
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        $phoneNumber = isset($_POST['phoneNumber']) ? $_POST['phoneNumber'] : '';
+        $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
+        $yob = $dob ? date('Y', strtotime($dob)) : '';
+        $visitFor = isset($_POST['visitFor']) ? $_POST['visitFor'] : '';
+        $docAssigned = isset($_POST['docAssigned']) ? $_POST['docAssigned'] : '';
+        $dateOfAppointment = isset($_POST['dateOfAppointment']) ? $_POST['dateOfAppointment'] : '';
+        $timeOfAppointment = isset($_POST['timeOfAppointment']) ? $_POST['timeOfAppointment'] : '';
+        $status = isset($_POST['status']) ? $_POST['status'] : '';
         $dateCreated = $_POST['dateCreated'];
     
         $sql = "INSERT INTO appointments (appointmentId, patientFirstName, patientLastName, patientEmail, phoneNumber, dob, yob, visitFor, doctorId, dateOfAppointment, timeOfAppointment, status, dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -429,7 +429,6 @@
                 timeOfAppointment: document.getElementById('timeOfAppointment').value,
                 status: document.getElementById('status').value
             };
-            console.log('Updating with data:', formData);
 
 
             fetch('../partials/processes.php', {
