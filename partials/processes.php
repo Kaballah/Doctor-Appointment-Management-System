@@ -15,13 +15,13 @@
         $primaryEmail = $_POST['email'];
         $primaryNumber = $_POST['phone'];
         $position = $_POST['user_type'];
-        echo "<script>console.log('Value of specialization from POST:', '" . $_POST['specialization'] . "');</script>";
+        // echo "<script>console.log('Value of specialization from POST:', '" . $_POST['specialization'] . "');</script>";  // Commented out for production
         $specialization = isset($_POST['specialization']) ? $_POST['specialization'] : null; // Handle cases where specialization is not applicable
         $password = md5($_POST['password']);
 
-        echo "<script>console.log('Value of doctorId from POST:', '" . $_POST['doctorId'] . "');</script>";
+        // echo "<script>console.log('Value of doctorId from POST:', '" . $_POST['doctorId'] . "');</script>";  // Commented out for production
         $doctorId = $_POST['doctorId'];
-        echo "<script>console.log('Value of salutation from POST:', '" . $_POST['salutationCreate a '] . "');</script>";
+        // echo "<script>console.log('Value of salutation from POST:', '" . $_POST['salutationCreate a '] . "');</script>"; // Commented out for production
         $salutation = $_POST['salutation'];
         $address = $_POST['address'];
         $dob = $_POST['dob'];
@@ -268,12 +268,36 @@
         $sql = "UPDATE appointments SET patientFirstName=?, patientLastName=?, patientEmail=?, phoneNumber=?, dob=?, yob=?, visitFor=?, doctorId=?, dateOfAppointment=?, timeOfAppointment=?, status=? WHERE appointmentId=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssssisissss", $firstNameEdit, $lastnameEdit, $emailEdit, $phoneNumberEdit, $dobEdit, $yobEdit, $visitForEdit, $docAssignedEdit, $dateOfAppointmentEdit, $timeOfAppointmentEdit, $statusEdit, $appointmentId);
-    
+        header('Content-Type: application/json');
         if ($stmt->execute()) {
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false, 'error' => $stmt->error]);
-            echo "<script>console.error('SQL Error: " . addslashes($stmt->error) . "');</script>";
+            // echo "<script>console.error('SQL Error: " . addslashes($stmt->error) . "');</script>"; //Commented out to ensure valid JSON response
+        }
+        $stmt->close();
+    } elseif (isset($_POST['update_cancelled_appointment'])) {
+        $appointmentId = $_POST['appointmentId'];
+        $firstNameEdit = $_POST['firstName'];
+        $lastnameEdit = $_POST['lastname'];
+        $emailEdit = $_POST['email'];
+        $phoneNumberEdit = $_POST['phoneNumber'];
+        $dobEdit = $_POST['dob'];
+        $yobEdit = $_POST['yob'];
+        $visitForEdit = $_POST['visitFor'];
+        $docAssignedEdit = $_POST['docAssigned'];
+        $dateOfAppointmentEdit = $_POST['dateOfAppointment'];
+        $timeOfAppointmentEdit = $_POST['timeOfAppointment'];
+        $statusEdit = $_POST['status'];
+    
+        $sqlQuery = "UPDATE appointments SET patientFirstName=?, patientLastName=?, patientEmail=?, phoneNumber=?, dob=?, yob=?, visitFor=?, doctorId=?, dateOfAppointment=?, timeOfAppointment=?, status=? WHERE appointmentId=?";
+        $stmt = $conn->prepare($sqlQuery);
+        $stmt->bind_param("sssssisissss", $firstNameEdit, $lastnameEdit, $emailEdit, $phoneNumberEdit, $dobEdit, $yobEdit, $visitForEdit, $docAssignedEdit, $dateOfAppointmentEdit, $timeOfAppointmentEdit, $statusEdit, $appointmentId);
+        header('Content-Type: application/json');
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true, 'query' => $sqlQuery]);
+        } else {
+            echo json_encode(['success' => false, 'error' => $stmt->error, 'query' => $sqlQuery]);
         }
         $stmt->close();
     }

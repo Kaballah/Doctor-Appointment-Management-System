@@ -83,11 +83,25 @@
                                         <?php
                                             if ($result->num_rows > 0) {
                                                 while($row = $result->fetch_assoc()) {
+                                                    // Get procedure name
+                                                    $procedureSql = "SELECT procedureName FROM procedures WHERE id = ?";
+                                                    $procedureStmt = $conn->prepare($procedureSql);
+                                                    $procedureStmt->bind_param("s", $row['visitFor']);
+                                                    $procedureStmt->execute();
+                                                    $procedureResult = $procedureStmt->get_result();
+                                                    if ($procedureResult->num_rows === 1) {
+                                                        $procedureRow = $procedureResult->fetch_assoc();
+                                                        $procedureName = $procedureRow['procedureName'];
+                                                    } else {
+                                                        $procedureName = 'Unknown';
+                                                    }
+                                                    $procedureStmt->close();
+
                                                     echo "<tr>";
                                                     echo "<td>" . $row["appointmentId"] . "</td>";
                                                     echo "<td>" . $row["patientFirstName"] . " " . $row["patientLastName"] . "</td>";
                                                     echo "<td>" . $row["patientEmail"] . "</td>";
-                                                    echo "<td>" . $row["visitFor"] . "</td>";
+                                                    echo "<td>" . $procedureName . "</td>";
                                                     echo "<td>" . $row["doctorName"] . "</td>";
                                                     echo "<td>" . $row["dateCreated"] . "</td>";
                                                     
@@ -162,7 +176,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="firstName">First Name: </label>
-                                                                <input type="text" name="firstName" id="firstName">
+                                                                <input type="text" name="firstName" id="firstname">
                                                             </td>
                                                         </div>
 
@@ -186,7 +200,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="phoneNumber">Phone Number: </label>
-                                                                <input type="tel" name="phoneNumber" id="phoneNumber">
+                                                                <input type="tel" name="phoneNumber" id="phonenumber">
                                                             </td>
                                                         </div>
                                                     </div>
@@ -197,7 +211,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="dob">Date of Birth: </label>
-                                                                <input type="date" name="dob" id="dob">
+                                                                <input type="date" name="dob" id="dofb">
                                                             </td>
                                                         </div>
                                                         <div class="td">
@@ -280,7 +294,7 @@
                 
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-sm" style='padding: .5rem;' onclick="updateAppointment()">Save Changes</button>
+                        <button type="button" class="btn btn-primary btn-sm" style='padding: .5rem;' onclick="updateCancelledAppointment()">Save Changes</button>
                     </div>
                 </div>
             </div>
@@ -320,12 +334,28 @@
                     console.error('Error fetching appointment details:', data.error);
                     alert('Error: ' + data.error);
                 } else {
-                    // Populate form fields
-                    document.getElementById('firstName').value = data.patientFirstName;
+                    // Populate form fields and log data
+                    console.log(data);
+                    document.getElementById('firstname').value = data.patientFirstName;
                     document.getElementById('lastname').value = data.patientLastName;
                     document.getElementById('patientEmail').value = data.patientEmail;
-                    document.getElementById('phoneNumber').value = data.dob;
-                    document.getElementById('dob').value = data.dob;
+                    document.getElementById('phonenumber').value = data.phoneNumber;
+                    document.getElementById('dofb').value = data.dob;
+                    
+                    // Calculate and set age
+                    const dob = new Date(data.dob);
+                    if (!isNaN(dob.getTime())) {
+                        const today = new Date();
+                        let age = today.getFullYear() - dob.getFullYear();
+                        const m = today.getMonth() - dob.getMonth();
+                        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                            age--;
+                        }
+                        document.getElementById('age').value = age;
+                    } else {
+                        document.getElementById('age').value = '';
+                    }
+
                     document.getElementById('dateOfAppointment').value = data.dateOfAppointment;
                     document.getElementById('timeOfAppointment').value = data.timeOfAppointment;
                     document.getElementById('dateCreated').value = data.dateCreated;
@@ -383,30 +413,33 @@
 
 
 
-        function updateAppointment() {
+        function updateCancelledAppointment() {
             const appointmentId = document.querySelector('.edit-appointment').dataset.appointmentId;
             const formData = {
                 appointmentId: appointmentId,
-                firstName: document.getElementById('firstName').value,
+                firstName: document.getElementById('firstname').value,
                 lastname: document.getElementById('lastname').value,
                 email: document.getElementById('patientEmail').value,
-                phoneNumber: document.getElementById('phoneNumber').value,
-                dob: document.getElementById('dob').value,
-                yob: new Date(document.getElementById('dob').value).getFullYear(),
+                phoneNumber: document.getElementById('phonenumber').value,
+                dob: document.getElementById('dofb').value,
+                yob: new Date(document.getElementById('dofb').value).getFullYear(),
                 visitFor: document.getElementById('visitFor').value,
                 docAssigned: document.getElementById('docAssigned').value,
                 dateOfAppointment: document.getElementById('dateOfAppointment').value,
                 timeOfAppointment: document.getElementById('timeOfAppointment').value,
                 status: document.getElementById('status').value
             };
-
             console.log('Updating with data:', formData);
+
 
             fetch('../partials/processes.php', {
                 method: 'POST',
-                body: new URLSearchParams({ ...formData, update_appointment: 'true' })
+                body: new URLSearchParams({ ...formData, update_cancelled_appointment: 'true' })
             })
-            .then(response => response.json())
+           .then(response => {
+               console.log('Raw server response:', response); // Log raw response
+               return response.json();
+            })
             .then(data => {
                 console.log('Server response:', data);
                 if (data.success) {
