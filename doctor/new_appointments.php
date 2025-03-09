@@ -477,18 +477,12 @@
     <?php include '../js/scripts.php' ?>
 
     <script>
-        // // Calculate age from date of birth in the add appointment form
-        // function calculateAge() {
-        //     const dob = new Date(document.getElementById('dob').value);
-        //     const age = new Date().getFullYear() - dob.getFullYear();
-        //     document.getElementById('age').value = isNaN(age) ? '' : age;
-        //     validateForm();
-        // }
+        console.log('Script loaded'); // Top-level debug
 
         // For randomly generating the appointment's ID
         async function generatePatientId() {
             let newId = '';
-            
+
             do {
                 newId = 'PID' + Date.now().toString(36) + Math.random().toString(36).substr(2, 4).toUpperCase();
                 var isUnique = await fetch(`../partials/check_patientid.php?patientId=${newId}`)
@@ -496,7 +490,7 @@
                     .then(data => data.isUnique)
                     .catch(() => true);
             } while (!isUnique);
-            
+
             // document.getElementById('patientID').value = newId;
             document.querySelector('.modal-title').textContent = `Appointment for Patient ${newId}`;
             validateForm();
@@ -548,12 +542,18 @@
             document.getElementById('visitFor').addEventListener('change', function() {
                 const procedure = this.value;
                 const doctorSelect = document.getElementById('docAssigned');
-                
+
                 if(procedure) {
                     fetch(`../partials/get_doctors.php?procedure=${encodeURIComponent(procedure)}`)
                         .then(response => response.json())
                         .then(doctors => {
                             doctorSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
+                            doctors.forEach(doctor => {
+                                const option = document.createElement('option');
+                                option.value = doctor.doctorId;
+                                option.textContent = doctor.doctorName;
+                                doctorSelect.appendChild(option);
+                            });
                             doctors.forEach(doctor => {
                                 const option = document.createElement('option');
                                 option.value = doctor.doctorId;
@@ -573,10 +573,39 @@
             // Add date of birth listener for age calculation
             document.getElementById('dob').addEventListener('change', function() {
                 const dob = new Date(this.value);
-                if (!isNaN(dob)) {
-                    const age = new Date().getFullYear() - dob.getFullYear();
+                console.log('dob:', dob); // Debugging
+                if (!isNaN(dob.getTime())) { // Use getTime() for more robust date validation
+                    const today = new Date();
+                    let age = today.getFullYear() - dob.getFullYear();
+                    const m = today.getMonth() - dob.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                        age--;
+                    }
+                    console.log('age:', age); // Debugging
                     document.getElementById('age').value = age;
                     validateForm();
+                } else {
+                    document.getElementById('age').value = ''; // Clear age if dob is invalid
+                }
+            });
+
+            // Calculate age on edit form as well
+            document.getElementById('dobEdit').addEventListener('change', function() {
+                const dobEdit = new Date(this.value);
+                console.log('dobEdit:', dobEdit);
+                if (!isNaN(dobEdit.getTime())) {
+                    const todayEdit = new Date();
+                    let ageEdit = todayEdit.getFullYear() - dobEdit.getFullYear();
+                    const monthEdit = todayEdit.getMonth() - dobEdit.getMonth();
+
+                    if(monthEdit < 0 || (monthEdit === 0 && todayEdit.getDate() < dobEdit.getDate())) {
+                        ageEdit--;
+                    }
+
+                    console.log('ageEdit', ageEdit);
+                    document.getElementById('ageEdit').value = ageEdit;
+                } else {
+                    document.getElementById('ageEdit').value = '';
                 }
             });
         });
