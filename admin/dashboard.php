@@ -7,7 +7,26 @@
 ?>
 
 <?php
-    $newQuery = 'SELECT COUNT(*) AS NewCount FROM appointments WHERE status="new"';
+    // Fetch user counts
+    $newUsersQuery = "SELECT COUNT(*) AS newUsersCount FROM users WHERE accountStatus = 'new'";
+    $newUsersResult = $conn->query($newUsersQuery);
+    $newUsersCount = ($newUsersResult) ? $newUsersResult->fetch_assoc()['newUsersCount'] : 0;
+
+    $activeUsersQuery = "SELECT COUNT(*) AS activeUsersCount FROM users WHERE accountStatus = 'active'";
+    $activeUsersResult = $conn->query($activeUsersQuery);
+    $activeUsersCount = ($activeUsersResult) ? $activeUsersResult->fetch_assoc()['activeUsersCount'] : 0;
+
+    $inactiveUsersQuery = "SELECT COUNT(*) AS inactiveUsersCount FROM users WHERE accountStatus = 'inactive'";
+    $inactiveUsersResult = $conn->query($inactiveUsersQuery);
+    $inactiveUsersCount = ($inactiveUsersResult) ? $inactiveUsersResult->fetch_assoc()['inactiveUsersCount'] : 0;
+
+    $allUsersQuery = "SELECT COUNT(*) AS allUsersCount FROM users";
+    $allUsersResult = $conn->query($allUsersQuery);
+    $allUsersCount = ($allUsersResult) ? $allUsersResult->fetch_assoc()['allUsersCount'] : 0;
+?>
+
+<?php
+    $newQuery = 'SELECT COUNT(*) AS NewCount FROM appointments WHERE status="new" ';
 
     $newResults = $conn->query($newQuery);
     $newCount = 0;
@@ -19,7 +38,7 @@
 ?>
 
 <?php
-    $approvedQuery = 'SELECT COUNT(*) AS ApprovedCount FROM appointments WHERE status="approved"';
+    $approvedQuery = 'SELECT COUNT(*) AS ApprovedCount FROM appointments WHERE status="approved" ';
 
     $approvedResults = $conn->query($approvedQuery);
     $approvedCount = 0;
@@ -31,7 +50,7 @@
 ?>
 
 <?php
-    $cancelledQuery = 'SELECT COUNT(*) AS CancelledCount FROM appointments WHERE status="cancelled"';
+    $cancelledQuery = 'SELECT COUNT(*) AS CancelledCount FROM appointments WHERE status="cancelled" ';
 
     $cancelledResults = $conn->query($cancelledQuery);
     $cancelledCount = 0;
@@ -43,7 +62,7 @@
 ?>
 
 <?php
-    $allQuery = 'SELECT COUNT(*) AS AllCount FROM appointments';
+    $allQuery = 'SELECT COUNT(*) AS AllCount FROM appointments ';
 
     $allResults = $conn->query($allQuery);
     $allCount = 0;
@@ -55,7 +74,7 @@
 ?>
 
 <?php
-    $queryThisWeek = "SELECT DATE(appointments.dateOfAppointment) AS AppointmentDate, COUNT(*) AS PatientCount FROM appointments WHERE appointments.status = 'approved' AND appointments.dateOfAppointment >= CURDATE() - INTERVAL 6 DAY GROUP BY DATE(appointments.dateOfAppointment) ORDER BY AppointmentDate DESC";
+    $queryThisWeek = "SELECT DATE(appointments.dateOfAppointment) AS AppointmentDate, COUNT(*) AS PatientCount FROM appointments WHERE appointments.dateOfAppointment >= CURDATE() - INTERVAL 6 DAY GROUP BY DATE(appointments.dateOfAppointment) ORDER BY AppointmentDate DESC";
 
     $resultThisWeek = $conn->query($queryThisWeek);
 
@@ -70,7 +89,7 @@
     }
 
     // Fetching last week's data (7 days prior)
-    $queryLastWeek = "SELECT DATE(appointments.dateOfAppointment) AS AppointmentDate, COUNT(*) AS PatientCount FROM appointments WHERE appointments.status = 'approved' AND appointments.dateOfAppointment BETWEEN CURDATE() - INTERVAL 13 DAY AND CURDATE() - INTERVAL 7 DAY GROUP BY DATE(appointments.dateOfAppointment) ORDER BY AppointmentDate DESC";
+    $queryLastWeek = "SELECT DATE(appointments.dateOfAppointment) AS AppointmentDate, COUNT(*) AS PatientCount FROM appointments WHERE appointments.dateOfAppointment BETWEEN CURDATE() - INTERVAL (DAYOFWEEK(CURDATE()) + 6) DAY AND CURDATE() - INTERVAL DAYOFWEEK(CURDATE()) DAY GROUP BY DATE(appointments.dateOfAppointment) ORDER BY AppointmentDate DESC";
 
     $resultLastWeek = $conn->query($queryLastWeek);
 
@@ -125,7 +144,7 @@
 ?>
 
 <?php
-    $sql = "SELECT CONCAT(patientfirstName, ' ', patientlastName) as patientName, phoneNumber, visitFor, dateCreated, dateOfAppointment, timeOfAppointment, doctorNote FROM appointments WHERE status = 'New'";
+    $sql = "SELECT CONCAT(patientfirstName, ' ', patientlastName) as patientName, phoneNumber, visitFor, dateCreated, dateOfAppointment, timeOfAppointment, doctorNote FROM appointments WHERE status = 'New' ";
     $NewModalResult = $conn->query($sql);
     
     $newModalAppointments = [];
@@ -138,7 +157,7 @@
 ?>
 
 <?php
-    $sql = "SELECT CONCAT(patientfirstName, ' ', patientlastName) as patientName, phoneNumber, visitFor, dateCreated, dateOfAppointment, timeOfAppointment, doctorNote FROM appointments WHERE status = 'Approved'";
+    $sql = "SELECT CONCAT(patientfirstName, ' ', patientlastName) as patientName, phoneNumber, visitFor, dateCreated, dateOfAppointment, timeOfAppointment, doctorNote FROM appointments WHERE status = 'Approved' ";
     $ApprovedModalResult = $conn->query($sql);
     
     $approvedModalAppointments = [];
@@ -151,7 +170,7 @@
 ?>
 
 <?php
-    $sql = "SELECT CONCAT(patientfirstName, ' ', patientlastName) as patientName, phoneNumber, visitFor, dateCreated, dateOfAppointment, timeOfAppointment, doctorNote FROM appointments WHERE dateOfAppointment < CURDATE() AND doctorNote IS NOT NULL";
+    $sql = "SELECT CONCAT(patientfirstName, ' ', patientlastName) as patientName, phoneNumber, visitFor, dateCreated, dateOfAppointment, timeOfAppointment, doctorNote FROM appointments WHERE dateOfAppointment < CURDATE() AND doctorNote IS NOT NULL ";
     $CompletedModalResult = $conn->query($sql);
     
     $completedModalAppointments = [];
@@ -173,6 +192,8 @@
 
         <?php include '../styles/styles.php'?>
         <!-- <link rel="stylesheet" href="../styles/dashboard.css"> -->
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </head>
 
     <body>
@@ -198,7 +219,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-3 col-6">
-                            <div class="small-box bg-success">
+                            <div class="small-box bg-warning">
                                 <div class="inner">
                                     <h3>
                                         <?php echo htmlspecialchars($newCount); ?>
@@ -208,7 +229,9 @@
                                 </div>
                                 
                                 <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
+                                    <i class="ion">
+                                        <ion-icon name="person-add"></ion-icon>
+                                    </i>
                                 </div>
                             
                                 <a href="./new_appointments.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -216,7 +239,7 @@
                         </div>
                         
                         <div class="col-lg-3 col-6">
-                            <div class="small-box bg-warning">
+                            <div class="small-box bg-success">
                                 <div class="inner">
                                     <h3>
                                         <?php echo htmlspecialchars($approvedCount); ?>
@@ -226,7 +249,9 @@
                                 </div>
                                 
                                 <div class="icon">
-                                    <i class="ion ion-person-add"></i>
+                                    <i class="ion">
+                                        <ion-icon name="person"></ion-icon>
+                                    </i>
                                 </div>
                                 
                                 <a href="./approved_appointments.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -244,7 +269,9 @@
                                 </div>
 
                                 <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
+                                    <i class="ion">
+                                        <ion-icon name="person-remove"></ion-icon>
+                                    </i>
                                 </div>
 
                                 <a href="./cancelled_appointments.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -262,7 +289,9 @@
                                 </div>
               
                                 <div class="icon">
-                                    <i class="ion ion-bag"></i>
+                                    <i class="ion">
+                                    <ion-icon name="people"></ion-icon>
+                                    </i>
                                 </div>
               
                                 <a href="./appointments.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -271,7 +300,189 @@
                     </div>
 
                     <div class="row">
-                        <section class="col-lg-7 connectedSortable">
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <a href="new_users.php" style="color: black;">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">New Users</span>
+                                        <span class="info-box-number">
+                                            <?php echo $newUsersCount; ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <a href="active_users.php" style="color: black;">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Active Users</span>
+                                        <span class="info-box-number">
+                                            <?php echo $activeUsersCount; ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="clearfix hidden-md-up"></div>
+
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <a href="inactive_users.php" style="color: black;">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Inactive Users</span>
+                                        <span class="info-box-number">
+                                            <?php echo $inactiveUsersCount; ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <a href="users.php" style="color: black;">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">All Users</span>
+                                        <span class="info-box-number">
+                                            <?php echo $allUsersCount; ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?php
+                                $proceduresQuery = "SELECT p.procedureName, COUNT(a.visitFor) AS procedureCount
+                                                    FROM procedures p
+                                                    LEFT JOIN appointments a ON p.id = a.visitFor
+                                                    GROUP BY p.procedureName";
+                                $proceduresResult = $conn->query($proceduresQuery);
+
+                                $procedureLabels = [];
+                                $procedureCounts = [];
+                                $procedureColors = [];
+
+                                // Generate some colors
+                                $colors = [
+                                    '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de',
+                                    '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b',
+                                    '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
+                                ];
+
+                                if ($proceduresResult->num_rows > 0) {
+                                    $colorIndex = 0;
+                                    while ($row = $proceduresResult->fetch_assoc()) {
+                                        $procedureLabels[] = $row['procedureName'];
+                                        $procedureCounts[] = $row['procedureCount'];
+                                        $procedureColors[] = $colors[$colorIndex % count($colors)]; // Cycle through colors
+                                        $colorIndex++;
+                                    }
+                                }
+
+                                $procedureLabelsJSON = json_encode($procedureLabels);
+                                $procedureCountsJSON = json_encode($procedureCounts);
+                                $procedureColorsJSON = json_encode($procedureColors);
+                            ?>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Visits per Procedure</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="chart-responsive">
+                                                <canvas id="pieChart" height="150"></canvas>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <ul class="chart-legend clearfix" id="chartLegend">
+                                                <!-- Legend will be generated here -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-footer p-0" style="display: none;">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <?php
+                                $recentUsersQuery = "SELECT CONCAT(salutation, ' ', firstName, ' ', lastName) AS fullName, dateCreated
+                                                    FROM users
+                                                    WHERE accountStatus = 'active'
+                                                    ORDER BY dateCreated DESC
+                                                    LIMIT 8";
+                                $recentUsersResult = $conn->query($recentUsersQuery);
+                                $recentUsers = [];
+                                if ($recentUsersResult->num_rows > 0) {
+                                    while ($row = $recentUsersResult->fetch_assoc()) {
+                                        $recentUsers[] = $row;
+                                    }
+                                }
+                            ?>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">New Members</h3>
+
+                                    <div class="card-tools">                                        
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-body p-0">
+                                    <ul class="users-list clearfix">
+                                        <?php foreach ($recentUsers as $user) : ?>
+                                            <li>
+                                                <img src="../dist/img/avatar.png" alt="User Image">
+                                                <a class="users-list-name" href="#"><?php echo htmlspecialchars($user['fullName']); ?></a>
+                                                <span class="users-list-date"><?php echo date('M d, Y', strtotime($user['dateCreated'])); ?></span>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <div class="card-footer text-center">
+                                <a href="javascript:">View All Users</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <section class="col-md-6 connectedSortable" style="border: 1px solid red;">
                             <div class="card">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
@@ -284,7 +495,7 @@
                                     <div class="d-flex">
                                         <p class="d-flex flex-column">
                                             <span class="text-bold text-lg">
-                                                <?php echo htmlspecialchars($approvedCount); ?>
+                                                <?php echo htmlspecialchars($allCount); ?>
                                             </span>
                                             <span>Patients Over Time</span>
                                         </p>
@@ -306,7 +517,7 @@
                             </div>
                         </section>
 
-                        <section class="col-lg-5 connectedSortable">
+                        <section class="col-md-6 connectedSortable" style="border: 1px solid blue;">
                             <div class="card bg-gradient-success">
                                 <div class="card-header border-0">
                                     <h3 class="card-title">
@@ -698,6 +909,8 @@
 
                 if (totalLastWeek > 0) {
                     percentageDifference = ((totalThisWeek - totalLastWeek) / totalLastWeek) * 100;
+                } else {
+                    percentageDifference = 100;
                 }
 
                 const percentageElement = document.querySelector('.percentage-difference');
@@ -721,13 +934,63 @@
                     return false;
                 });
 
-                // Get new and approved appointment counts by date from database
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                
+                // var pieData = {
+                //     labels: [
+                //         'Chrome',
+                //         'IE',
+                //         'FireFox',
+                //         'Safari',
+                //         'Opera',
+                //         'Navigator'
+                //     ],
+                //     datasets: [
+                //         {
+                //             data: [700, 500, 400, 600, 300, 100],
+                //             backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
+                //         }
+                //     ]
+                // }
+
+               var pieOptions = {
+                    legend: {
+                        display: false
+                    },
+                    maintainAspectRatio : false,
+                    responsive : true,
+                }
+
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'doughnut',
+                    data: {
+                        labels: <?php echo $procedureLabelsJSON; ?>,
+                        datasets: [{
+                            data: <?php echo $procedureCountsJSON; ?>,
+                            backgroundColor: <?php echo $procedureColorsJSON; ?>,
+                        }]
+                    },
+                    options: pieOptions
+                });
+                
+                //-----------------
+                //- END PIE CHART -
+                //-----------------
+
+                // Generate legend
+                var legendHtml = '';
+                for (var i = 0; i < pieChart.data.labels.length; i++) {
+                    legendHtml += '<li><i class="far fa-circle" style="color:' + pieChart.data.datasets[0].backgroundColor[i] + '"></i> ' + pieChart.data.labels[i] + '</li>';
+                }
+                $('#chartLegend').html(legendHtml);
+
+                 // Get new and approved appointment counts by date from database
                 <?php
                 // Query for new appointments count by date
-                $newCountsQuery = "SELECT DATE(dateOfAppointment) AS AppointmentDate, COUNT(*) AS count
-                                 FROM appointments
-                                 WHERE status='new'
-                                 GROUP BY DATE(dateOfAppointment)";
+                $newCountsQuery = "SELECT DATE(dateOfAppointment) AS AppointmentDate, COUNT(*) AS count FROM appointments WHERE status='new' GROUP BY DATE(dateOfAppointment)";
                 $newCountsResult = $conn->query($newCountsQuery);
                 $newCountsByDate = [];
                 while ($row = $newCountsResult->fetch_assoc()) {
@@ -738,6 +1001,7 @@
                 $approvedCountsQuery = "SELECT DATE(dateOfAppointment) AS AppointmentDate, COUNT(*) AS count
                                       FROM appointments
                                       WHERE status='approved'
+                                      AND doctorId = " . $_SESSION['user_id'] . "
                                       GROUP BY DATE(dateOfAppointment)";
                 $approvedCountsResult = $conn->query($approvedCountsQuery);
                 $approvedCountsByDate = [];

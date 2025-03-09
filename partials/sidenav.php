@@ -145,7 +145,7 @@ include "../styles/styles.php";
                             </li>
 
                             <li class="nav-item">
-                                <a href="<?php echo $basePath; ?>/users.php" class="nav-link <?php echo ($currentPage == 'users') ? 'active' : ''; ?>">
+                                <a href="<?php echo $basePath; ?>users.php" class="nav-link <?php echo ($currentPage == 'users') ? 'active' : ''; ?>">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>All Users</p>
                                 </a>
