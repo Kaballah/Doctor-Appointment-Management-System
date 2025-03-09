@@ -12,6 +12,8 @@
 <script src="../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
 <script src="../plugins/jquery-knob/jquery.knob.min.js"></script>
 
+<script src="../dist/js/pages/dashboard2.js"></script>
+
 <script src="../plugins/moment/moment.min.js"></script>
 <script src="../plugins/daterangepicker/daterangepicker.js"></script>
 <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>

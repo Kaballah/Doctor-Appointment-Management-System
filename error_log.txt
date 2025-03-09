@@ -1,0 +1,85 @@
+[09-Mar-2025 16:33:43 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:37
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(37): mysqli->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 37
+[09-Mar-2025 16:35:16 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:40
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(40): mysqli->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 40
+[09-Mar-2025 16:35:17 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:40
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(40): mysqli->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 40
+[09-Mar-2025 16:36:03 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:52
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(52): mysqli->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 52
+[09-Mar-2025 16:36:27 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:157
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(157): mysqli->query('SELECT CONCAT(p...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 157
+[09-Mar-2025 16:36:40 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:170
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(170): mysqli->query('SELECT CONCAT(p...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 170
+[09-Mar-2025 16:37:04 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'profilePic' in 'field list' in /opt/lampp/htdocs/a/admin/dashboard.php:453
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(453): mysqli->query('SELECT CONCAT(s...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 453
+[09-Mar-2025 16:37:54 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'profilePic' in 'field list' in /opt/lampp/htdocs/a/admin/dashboard.php:453
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(453): mysqli->query('SELECT CONCAT(s...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 453
+[09-Mar-2025 16:38:31 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'dateCreated' in 'field list' in /opt/lampp/htdocs/a/admin/dashboard.php:453
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(453): mysqli->query('SELECT CONCAT(s...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 453
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Warning:  Undefined array key "profilePic" in /opt/lampp/htdocs/a/admin/dashboard.php on line 480
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 632
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 693
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 766
+[09-Mar-2025 16:39:42 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:995
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(995): mysqli->query('SELECT DATE(dat...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 995
+[09-Mar-2025 16:40:25 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 632
+[09-Mar-2025 16:40:25 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 693
+[09-Mar-2025 16:40:25 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 766
+[09-Mar-2025 16:40:25 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:995
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(995): mysqli->query('SELECT DATE(dat...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 995
+[09-Mar-2025 16:42:52 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 632
+[09-Mar-2025 16:42:52 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 693
+[09-Mar-2025 16:42:52 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 766
+[09-Mar-2025 16:42:52 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:995
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(995): mysqli->query('SELECT DATE(dat...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 995
+[09-Mar-2025 16:42:53 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 632
+[09-Mar-2025 16:42:53 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 693
+[09-Mar-2025 16:42:53 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /opt/lampp/htdocs/a/admin/dashboard.php on line 766
+[09-Mar-2025 16:42:53 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'accountStatus' in 'where clause' in /opt/lampp/htdocs/a/admin/dashboard.php:995
+Stack trace:
+#0 /opt/lampp/htdocs/a/admin/dashboard.php(995): mysqli->query('SELECT DATE(dat...')
+#1 {main}
+  thrown in /opt/lampp/htdocs/a/admin/dashboard.php on line 995
