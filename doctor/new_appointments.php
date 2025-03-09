@@ -179,7 +179,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="firstName">First Name: </label>
-                                                                <input type="text" name="firstName" id="firstName">
+                                                                <input type="text" name="firstName" id="firstname">
                                                             </td>
                                                         </div>
 
@@ -204,7 +204,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="phoneNumber">Phone Number: </label>
-                                                                <input type="tel" name="phoneNumber" id="phoneNumber">
+                                                                <input type="tel" name="phoneNumber" id="phonenumber">
                                                             </td>
                                                         </div>
                                                     </div>
@@ -215,7 +215,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="dob">Date of Birth: </label>
-                                                                <input type="date" name="dob" id="dob">
+                                                                <input type="date" name="dob" id="dofb">
                                                             </td>
                                                         </div>
                                                         <div class="td">
@@ -306,7 +306,7 @@
                 
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-sm" style='padding: .5rem;' disabled onclick="saveAppointment()">Add Appointment</button>
+                        <button type="button" class="btn btn-primary btn-sm" style='padding: .5rem;'  onclick="saveAppointment()">Add Appointment</button>
                     </div>
                 </div>
             </div>
@@ -500,8 +500,8 @@
         // If not, then the Add button should be disabled and non-functional
         function validateForm() {
             const requiredFields = [
-                'firstName', 'lastname', 'patientEmail',
-                'phoneNumber', 'dob', 'visitFor',
+                'firstname', 'lastname', 'patientEmail',
+                'phonenumber', 'dofb', 'visitFor',
                 'docAssigned', 'dateOfAppointment', 'timeOfAppointment'
             ];
 
@@ -510,7 +510,7 @@
                 return el.value.trim() !== '';
             });
 
-            document.querySelector('#modal-lg .btn-primary').disabled = !isValid;
+            // document.querySelector('#modal-lg .btn-primary').disabled = !isValid;
         }
 
         // For creating the table to display the appointment information
@@ -538,42 +538,86 @@
             // Initial validation
             validateForm();
 
-            // Add event listener for procedure selection
-            document.getElementById('visitFor').addEventListener('change', function() {
-                const procedure = this.value;
-                const doctorSelect = document.getElementById('docAssigned');
-
-                if(procedure) {
-                    fetch(`../partials/get_doctors.php?procedure=${encodeURIComponent(procedure)}`)
-                        .then(response => response.json())
-                        .then(doctors => {
-                            doctorSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
-                            doctors.forEach(doctor => {
-                                const option = document.createElement('option');
-                                option.value = doctor.doctorId;
-                                option.textContent = doctor.doctorName;
-                                doctorSelect.appendChild(option);
-                            });
-                            doctors.forEach(doctor => {
-                                const option = document.createElement('option');
-                                option.value = doctor.doctorId;
-                                option.textContent = doctor.doctorName;
-                                doctorSelect.appendChild(option);
-                            });
-                            doctorSelect.disabled = false;
-                            validateForm();
-                        });
-                } else {
-                    doctorSelect.innerHTML = '<option value="" disabled selected>Select a Checkup first</option>';
-                    doctorSelect.disabled = true;
-                    validateForm();
-                }
-            });
+            
 
             // Add date of birth listener for age calculation
-            document.getElementById('dob').addEventListener('change', function() {
+            // document.getElementById('dob').addEventListener('change', function() {
+            //     const dob = new Date(this.value);
+            //     console.log('dob:', dob); // Debugging
+            //     if (!isNaN(dob.getTime())) { // Use getTime() for more robust date validation
+            //         const today = new Date();
+            //         let age = today.getFullYear() - dob.getFullYear();
+            //         const m = today.getMonth() - dob.getMonth();
+            //         if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+            //             age--;
+            //         }
+            //         console.log('age:', age); // Debugging
+            //         document.getElementById('age').value = age;
+            //         validateForm();
+            //     } else {
+            //         document.getElementById('age').value = ''; // Clear age if dob is invalid
+            //     }
+            // });
+
+            // // Calculate age on edit form as well
+            // document.getElementById('dobEdit').addEventListener('change', function() {
+            //     const dobEdit = new Date(this.value);
+            //     console.log('dobEdit:', dobEdit);
+            //     if (!isNaN(dobEdit.getTime())) {
+            //         const todayEdit = new Date();
+            //         let ageEdit = todayEdit.getFullYear() - dobEdit.getFullYear();
+            //         const monthEdit = todayEdit.getMonth() - dobEdit.getMonth();
+
+            //         if(monthEdit < 0 || (monthEdit === 0 && todayEdit.getDate() < dobEdit.getDate())) {
+            //             ageEdit--;
+            //         }
+
+            //         console.log('ageEdit', ageEdit);
+            //         document.getElementById('ageEdit').value = ageEdit;
+            //     } else {
+            //         document.getElementById('ageEdit').value = '';
+            //     }
+            // });
+        });
+
+        // Add event listener for procedure selection
+        document.getElementById('visitFor').addEventListener('change', function() {
+            const procedure = this.value;
+            const doctorSelect = document.getElementById('docAssigned');
+
+            if(procedure) {
+                fetch(`../partials/get_doctors.php?procedure=${encodeURIComponent(procedure)}`)
+                    .then(response => response.json())
+                    .then(doctors => {
+                        doctorSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
+                        doctors.forEach(doctor => {
+                            const option = document.createElement('option');
+                            option.value = doctor.doctorId;
+                            option.textContent = doctor.doctorName;
+                            doctorSelect.appendChild(option);
+                        });
+                        doctors.forEach(doctor => {
+                            const option = document.createElement('option');
+                            option.value = doctor.doctorId;
+                            option.textContent = doctor.doctorName;
+                            doctorSelect.appendChild(option);
+                        });
+                        doctorSelect.disabled = false;
+                        validateForm();
+                    });
+            } else {
+                doctorSelect.innerHTML = '<option value="" disabled selected>Select a Checkup first</option>';
+                doctorSelect.disabled = true;
+                validateForm();
+            }
+        });
+
+        const dobInput = document.getElementById('dofb');
+        if (dobInput) {
+            // dobInput.addEventListener('change', function() {
+                // console.log('Script loaded');
+            dobInput.addEventListener('change', function() {
                 const dob = new Date(this.value);
-                console.log('dob:', dob); // Debugging
                 if (!isNaN(dob.getTime())) { // Use getTime() for more robust date validation
                     const today = new Date();
                     let age = today.getFullYear() - dob.getFullYear();
@@ -581,46 +625,28 @@
                     if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
                         age--;
                     }
-                    console.log('age:', age); // Debugging
                     document.getElementById('age').value = age;
                     validateForm();
                 } else {
                     document.getElementById('age').value = ''; // Clear age if dob is invalid
                 }
             });
+            // });
+        } else {
+            console.error('Element with ID "dofb" not found.');
+        }
 
-            // Calculate age on edit form as well
-            document.getElementById('dobEdit').addEventListener('change', function() {
-                const dobEdit = new Date(this.value);
-                console.log('dobEdit:', dobEdit);
-                if (!isNaN(dobEdit.getTime())) {
-                    const todayEdit = new Date();
-                    let ageEdit = todayEdit.getFullYear() - dobEdit.getFullYear();
-                    const monthEdit = todayEdit.getMonth() - dobEdit.getMonth();
-
-                    if(monthEdit < 0 || (monthEdit === 0 && todayEdit.getDate() < dobEdit.getDate())) {
-                        ageEdit--;
-                    }
-
-                    console.log('ageEdit', ageEdit);
-                    document.getElementById('ageEdit').value = ageEdit;
-                } else {
-                    document.getElementById('ageEdit').value = '';
-                }
-            });
-        });
-
-      function saveAppointment() {
+        function saveAppointment() {
             const formDataSave = {
                 patientID: document.getElementById('patientID').value,
-                firstName: document.getElementById('firstName').value,
+                firstName: document.getElementById('firstname').value,
                 lastname: document.getElementById('lastname').value,
                 email: document.getElementById('patientEmail').value,
-                phoneNumber: document.getElementById('phoneNumber').value,
-                dob: document.getElementById('dob').value,
+                phoneNumber: document.getElementById('phonenumber').value,
+                dob: document.getElementById('dofb').value,
                 visitFor: document.getElementById('visitFor').value,
                 docAssigned: document.getElementById('docAssigned').value,
-                yob: new Date(document.getElementById('dob').value).getFullYear(),
+                yob: new Date(document.getElementById('dofb').value).getFullYear(),
                 status: document.getElementById('status').value,
                 dateOfAppointment: document.getElementById('dateOfAppointment').value,
                 timeOfAppointment: document.getElementById('timeOfAppointment').value,
@@ -634,11 +660,15 @@
                 method: 'POST',
                 body: new URLSearchParams({ ...formDataSave, save_appointment: 'true' })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Raw server response:', response); // Log raw response
+                return response.json(); // First, get the response as text
+            })
             .then(data => {
+                console.log('Raw response text:', data);
                 if(data.success) {
                     $('#modal-lg').modal('hide');
-                    location.reload(); // Refresh to show new appointment
+                    // location.reload(); // Refresh to show new appointment
                 } else {
                     alert('Error saving appointment: ' + (data.error || 'Unknown error'));
                     // console.error('Error fetching appointment details:', data.error);
