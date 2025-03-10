@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php');
+    exit;
+}
+?>
 <link rel="stylesheet" href="../styles/appointment.css">
 
 <nav class="main-header navbar navbar-expand">
