@@ -237,7 +237,8 @@
                                                                 <label for="visitFor">Checkup Type: </label>
                                                                 <!-- <input type="test" name="visitFor" id="visitFor"> -->
                                                                 <br>
-                                                                <select name="visitFor" id="visitFor" style="width: 100%;" disabled>
+                                                                <select name="visitFor" id="visitFor" style="width: 100%;">
+                                                                    <option value="" disabled selected>Select a specialization</option>
                                                                     <?php
                                                                         $procedures = $conn->query("SELECT id, procedureName FROM procedures WHERE status='available'");
                                                                         while($procedure = $procedures->fetch_assoc()) {
@@ -253,8 +254,8 @@
                                                                 <label for="docAssigned">Doctor Assigned: </label>
                                                                 <!-- <input type="text" name="docAssigned" id="docAssigned"> -->
                                                                 <br>
-                                                                <select name="docAssigned" id="docAssigned" style="width: 100%;" disabled>
-                                                                    <option value="Dr. Ronnie Kaballah" selected><?php echo htmlspecialchars($doctorFullName); ?></option>
+                                                                <select name="docAssigned" id="docAssigned" style="width: 100%;">
+                                                                    <option value="" disabled selected>Select Doctor</option>
                                                                 </select>
                                                             </td>
                                                         </div>
@@ -493,7 +494,70 @@
             // document.getElementById('patientID').value = newId;
             document.querySelector('.modal-title').textContent = `Appointment for Patient ${newId}`;
             validateForm();
+
+            // Populate the doctor dropdown initially
+            const initialProcedure = document.getElementById('visitFor').value;
+            console.log("Initial Procedure:", initialProcedure); // Debugging
+            // if (initialProcedure) {
+                populateDoctorDropdownOnModalOpen(initialProcedure || null);
+            // }
         }
+
+        // Function to populate the doctor dropdown on modal open
+        function populateDoctorDropdownOnModalOpen(procedure) {
+            const doctorSelect = document.getElementById('docAssigned');
+            console.log("Populating doctors for procedure:", procedure); // Debugging
+            if(procedure) {
+                fetch(`../partials/get_doctors.php?specialization=${encodeURIComponent(procedure)}`)
+                    .then(response => {
+                        console.log("Raw response:", response); // Log raw response
+                        return response.json();
+                    })
+                    .then(doctors => {
+                        console.log("Doctors:", doctors); // Log parsed doctors
+                        doctorSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
+                        doctors.forEach(doctor => {
+                            const option = document.createElement('option');
+                            option.value = doctor.doctorId;
+                            option.textContent = doctor.doctorName;
+                            doctorSelect.appendChild(option);
+                        });
+                        doctorSelect.disabled = false;
+                        validateForm();
+                    }).catch(error => {
+                        console.error("Error fetching doctors:", error);
+                    });
+            } else {
+                doctorSelect.innerHTML = '<option value="" disabled selected>Select a Checkup first</option>';
+                doctorSelect.disabled = true;
+                validateForm();
+            }
+        }
+      // Add event listener for procedure selection in edit modal
+        document.getElementById('visitForEdit').addEventListener('change', function() {
+            const procedure = this.value;
+            const doctorSelect = document.getElementById('docAssignedEdit');
+
+            if(procedure) {
+                fetch(`../partials/get_doctors.php?specialization=${encodeURIComponent(procedure)}`)
+                    .then(response => response.json())
+                    .then(doctors => {
+                        doctorSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
+                        doctors.forEach(doctor => {
+                            const option = document.createElement('option');
+                            option.value = doctor.doctorId;
+                            option.textContent = doctor.doctorName;
+                            doctorSelect.appendChild(option);
+                        });
+                        doctorSelect.disabled = false;
+                        validateForm();
+                    });
+            } else {
+                doctorSelect.innerHTML = '<option value="" disabled selected>Select a Checkup first</option>';
+                doctorSelect.disabled = true;
+                validateForm();
+            }
+        });
 
         // For checking if all the stated fields are filled as required.
         // If not, then the Add button should be disabled and non-functional
@@ -585,16 +649,10 @@
             const doctorSelect = document.getElementById('docAssigned');
 
             if(procedure) {
-                fetch(`../partials/get_doctors.php?procedure=${encodeURIComponent(procedure)}`)
+                fetch(`../partials/get_doctors.php?specialization=${encodeURIComponent(procedure)}`)
                     .then(response => response.json())
                     .then(doctors => {
                         doctorSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
-                        doctors.forEach(doctor => {
-                            const option = document.createElement('option');
-                            option.value = doctor.doctorId;
-                            option.textContent = doctor.doctorName;
-                            doctorSelect.appendChild(option);
-                        });
                         doctors.forEach(doctor => {
                             const option = document.createElement('option');
                             option.value = doctor.doctorId;
@@ -636,41 +694,45 @@
         }
 
         function saveAppointment() {
-            const formDataSave = {
-                patientID: document.getElementById('patientID').value,
-                firstName: document.getElementById('firstname').value,
-                lastname: document.getElementById('lastname').value,
-                email: document.getElementById('patientEmail').value,
-                phoneNumber: document.getElementById('phonenumber').value,
-                dob: document.getElementById('dofb').value,
-                visitFor: document.getElementById('visitFor').value,
-                docAssigned: document.getElementById('docAssigned').value,
-                yob: new Date(document.getElementById('dofb').value).getFullYear(),
-                status: document.getElementById('status').value,
-                dateOfAppointment: document.getElementById('dateOfAppointment').value,
-                timeOfAppointment: document.getElementById('timeOfAppointment').value,
-                dateCreated: document.getElementById('dateCreated').value
-                // save_appointment: 'true'
-            };
+            const formData = new FormData();
+            formData.append('patientID', document.getElementById('patientID').value);
+            formData.append('firstName', document.getElementById('firstname').value);
+            formData.append('lastname', document.getElementById('lastname').value);
+            formData.append('email', document.getElementById('patientEmail').value);
+            formData.append('phoneNumber', document.getElementById('phonenumber').value);
+            formData.append('dob', document.getElementById('dofb').value);
+            formData.append('visitFor', document.getElementById('visitFor').value);
+            formData.append('docAssigned', document.getElementById('docAssigned').value);
+            formData.append('yob', new Date(document.getElementById('dofb').value).getFullYear());
+            formData.append('status', document.getElementById('status').value);
+            formData.append('dateOfAppointment', document.getElementById('dateOfAppointment').value);
+            formData.append('timeOfAppointment', document.getElementById('timeOfAppointment').value);
+            formData.append('dateCreated', document.getElementById('dateCreated').value);
+            formData.append('save_appointment', 'true');
 
-            console.log(formDataSave);
+            console.log(formData);
 
             fetch('../partials/processes.php', {
                 method: 'POST',
-                body: new URLSearchParams({ ...formDataSave, save_appointment: 'true' })
+                body: formData
             })
             .then(response => {
                 console.log('Raw server response:', response); // Log raw response
-                return response.json(); // First, get the response as text
+                return response.text(); // First, get the response as text
             })
             .then(data => {
                 console.log('Raw response text:', data);
-                if(data.success) {
-                    $('#modal-lg').modal('hide');
-                    // location.reload(); // Refresh to show new appointment
-                } else {
-                    alert('Error saving appointment: ' + (data.error || 'Unknown error'));
-                    // console.error('Error fetching appointment details:', data.error);
+                try {
+                    const jsonData = JSON.parse(data);
+                    if (jsonData.success) {
+                        $('#modal-lg').modal('hide');
+                        location.reload(); // Refresh to show new appointment
+                    } else {
+                        alert('Error saving appointment: ' + (jsonData.error || 'Unknown error'));
+                    }
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    alert('Error: Invalid response from server');
                 }
             })
             .catch(error => {
@@ -725,66 +787,55 @@
 
                     // Populate visitFor dropdown
                     const visitForSelect = document.getElementById('visitForEdit');
-                    // Fetch procedures (assuming you have a way to get procedure IDs and names)
-                    // For example, you might have a separate PHP script or use existing data
-                    // Here, I'll simulate fetching procedures
-                    visitForSelect.innerHTML = '';
-                    const option = document.createElement('option');
-                    option.value = data.visitFor;
-                    option.textContent = data.visitForText;
-                    option.selected = true;
-                    visitForSelect.appendChild(option);
+                    fetch('../partials/get_procedures.php') // Fetch all procedures
+                        .then(response => response.json())
+                        .then(procedures => {
+                            visitForSelect.innerHTML = '';
+                            procedures.forEach(procedure => {
+                                const option = document.createElement('option');
+                                option.value = procedure.id;
+                                option.textContent = procedure.procedureName;
+                                if (procedure.id === data.visitFor) {
+                                    option.selected = true; // Select the current procedure
+                                }
+                                visitForSelect.appendChild(option);
+                            });
 
-
-                    // Populate docAssigned dropdown based on selected procedure
-                    populateDoctorDropdown(data.visitFor, data.doctorId);
+                            // Populate docAssigned dropdown based on selected procedure
+                            populateDoctorDropdown(data.visitFor, data.doctorId);
+                        });
                 }
             });
         }
 
-        // Populate the doctor's dropdown options
-        function populateDoctorDropdown(specializationId, selectedDoctorId) {
-            const doctorSelect = document.getElementById('docAssignedEdit');
+    function populateDoctorDropdown(specializationId, selectedDoctorId) {
+      const doctorSelect = document.getElementById('docAssignedEdit');
+      if (specializationId) {
+          fetch(`../partials/get_doctors.php?specialization=${encodeURIComponent(specializationId)}`)
+          .then(response => response.json())
+          .then(doctors => {
+              doctorSelect.innerHTML = '';
+              doctors.forEach(doctor => {
+                  const option = document.createElement('option');
+                  option.value = doctor.doctorId;
+                  option.textContent = doctor.doctorName;
+                  if (doctor.doctorId === selectedDoctorId) {
+                      option.selected = true;
+                  }
+                  doctorSelect.appendChild(option);
+              });
+          });
+      } else {
+          doctorSelect.innerHTML = '<option value="" disabled selected>Select a Checkup first</option>';
+      }
+    }
 
-            if (specializationId) {
-                fetch(`../partials/get_doctors.php?specialization=${encodeURIComponent(specializationId)}`)
-                .then(response => response.json())
-                .then(doctors => {
-                    doctorSelect.innerHTML = '';
+    // Function to refresh the table data (using DataTables API)
+    function refreshTable() {
+        // Assuming 'table' is your DataTable instance
+        table.ajax.reload();
+    }
 
-                    doctors.forEach(doctor => {
-                        const option = document.createElement('option');
-
-                        option.value = doctor.doctorId;
-                        option.textContent = doctor.doctorName;
-
-                        if (doctor.doctorId === selectedDoctorId) {
-                            option.selected = true;
-                        }
-
-                        doctorSelect.appendChild(option);
-                    });
-                });
-            } else {
-                doctorSelect.innerHTML = '<option value="" disabled selected>Select a Checkup first</option>';
-            }
-        }
-
-        // Function to refresh the table data
-        function refreshTable() {
-            fetch('/partials/fetch-appointments.php') // Replace with your server-side script
-                .then(response => response.json())
-                .then(data => {
-                    // Clear the existing table data
-                    table.clear();
-
-                    // Add the new data
-                    table.rows.add(data).draw();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        }
 
         // Updates the data on the database
         function updateAppointment() {
@@ -812,73 +863,26 @@
             fetch('../partials/processes.php', {
                 method: 'POST',
                 // headers: {
-                //     'Content-Type': 'x-www-form-urlencoded', // Set the correct header
+                //     'Content-Type': 'application/x-www-form-urlencoded',
                 // },
                 body: new URLSearchParams({ ...formData, update_appointment: 'true' })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // // Update the table row in place
-                    // const row = $(`#tableResponsive tbody tr[data-appointment-id="${appointmentId}"]`);
-                    // row.find('td:nth-child(2)').text(formData.firstName + ' ' + formData.lastname);
-                    // row.find('td:nth-child(3)').text(formData.email);
-                    // row.find('td:nth-child(4)').text($('#visitFor option:selected').text());
-                    // row.find('td:nth-child(5)').text($('#docAssigned option:selected').text());
-
                     toastr.success('Appointment updated successfully!');
-
                     refreshTable();
                     $('#modal-lg-edit').modal('hide');
-                    <?php $_SESSION['update_success'] = 'Appointment Updated Successfully!'; ?>
-                    // location.reload();
+                    
                 } else {
-                    <?php $_SESSION['update_error'] = 'Error! Please Try Again Later.'; ?>
-                    // location.reload();
-                    // setTimeout(function() { window.location.reload(); }, 5000);
-                    // toastr.error('Error Updating Appointment 1: ' + (data.error || 'Unknown error'));
+                    toastr.error('Error updating appointment: ' + (data.error || 'Unknown error'));
                 }
             })
             .catch(error => {
-                <?php $_SESSION['update_error'] = 'Error! Please Try Again Later.'; ?>
-                location.reload();
+                toastr.error('Error: ' + error.message);
+                console.error('Error updating appointment:', error);
             });
         }
-    </script>
-    <!-- <script>
-        // Show success notification after page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            <?php if(isset($update_success)): ?>
-                toastr.success('<?php echo htmlspecialchars($update_success, ENT_QUOTES); ?>');
-                unset($update_success);
-            <?php endif; ?>
-
-            <?php if(isset($update_error)): ?>
-                toastr.error('<?php echo htmlspecialchars($update_error, ENT_QUOTES); ?>');
-                unset($update_error);
-            <?php endif; ?>
-        });
-    </script> -->
-
-    <!-- Check for local storage items on page load and clear them after displaying -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-
-            if (urlParams.has('update_success')) {
-                toastr.success(decodeURIComponent(urlParams.get('update_success')));
-                // Remove the parameter from the URL
-                urlParams.delete('update_success');
-                window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-            }
-
-            if (urlParams.has('update_error')) {
-                toastr.error(decodeURIComponent(urlParams.get('update_error')));
-                // Remove the parameter from the URL
-                urlParams.delete('update_error');
-                window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-            }
-        });
     </script>
 </body>
 </html>
