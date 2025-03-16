@@ -440,7 +440,7 @@
         <?php 
             include '../partials/connect.php';
 
-            $sql = "SELECT doctorId AS ID, CONCAT(firstName, ' ', IFNULL(middleName, ''), ' ', lastName) AS Name, position AS Position, address AS Address, primaryEmail AS Email, primaryNumber AS Number, salutation, dob, secondaryNumber, secondaryEmail, specialization, workingHoursWeekdays, workingHoursWeekends, accountStatus, salary FROM users WHERE accountStatus LIKE 'Active'";
+            $sql = "SELECT doctorId AS ID, CONCAT(firstName, ' ', IFNULL(middleName, ''), ' ', lastName) AS Name, position AS Position, address AS Address, primaryEmail AS Email, primaryNumber AS Number, salutation, dob, secondaryNumber, secondaryEmail, specialization, workingHoursWeekdays, workingHoursWeekends, accountStatus, salary, firstKinId, secondKinId FROM users WHERE accountStatus LIKE 'Active'";
             $result = $conn->query($sql);
 
             echo '<script>';
@@ -525,26 +525,26 @@
                 });
 
                 function displayClientDetails(clientData) {
-                    const weekdayTimes = clientData.workingHoursWeekdays.split(' - ');
-                    const weekendTimes = clientData.workingHoursWeekends.split(' - ');
+                    const weekdayTimes = clientData.workingHoursWeekdays?.split(' - ');
+                    const weekendTimes = clientData.workingHoursWeekends?.split(' - ');
 
-                    const weekdayStart = convertTo24HourFormat(weekdayTimes[0]);
-                    const weekdayEnd = convertTo24HourFormat(weekdayTimes[1]);
-                    const weekendStart = convertTo24HourFormat(weekendTimes[0]);
-                    const weekendEnd = convertTo24HourFormat(weekendTimes[1]);
+                    const weekdayStart = weekdayTimes ? convertTo24HourFormat(weekdayTimes[0]) : '';
+                    const weekdayEnd = weekdayTimes ? convertTo24HourFormat(weekdayTimes[1]) : '';
+                    const weekendStart = weekendTimes ? convertTo24HourFormat(weekendTimes[0]) : '';
+                    const weekendEnd = weekendTimes ? convertTo24HourFormat(weekendTimes[1]) : '';
 
                     $('#sal').val(clientData.salutation);
                     $('#firstName').val(clientData.Name.split(' ')[0]);
-                    $('#middlename').val(clientData.Name.split(' ')[1]);
+                    $('#middlename').val(clientData.Name.split(' ')[1] || ''); // Handle potentially missing middle name
                     $('#lastname').val(clientData.Name.split(' ')[2]);
 
                     $('#dob').val(clientData.dob);
                     $('#age').val(calculateAge(clientData.dob));
 
                     $('#primaryNumber').val(clientData.Number);
-                    $('#secondaryNumber').val(clientData.secondaryNumber);
+                    $('#secondaryNumber').val(clientData.secondaryNumber || ''); // Handle potentially missing secondary number
                     $('#primaryEmail').val(clientData.Email);
-                    $('#secondaryEmail').val(clientData.secondaryEmail);
+                    $('#secondaryEmail').val(clientData.secondaryEmail || ''); // Handle potentially missing secondary email
                     $('#address').val(clientData.Address);
 
                     $('#weekdayStart').val(weekdayStart);
@@ -556,6 +556,9 @@
 
                     $('#user-type').val(clientData.Position);
                     $('#specialization').val(clientData.specialization);
+
+                    // TODO: Fetch and display emergency contact information using firstKinId and secondKinId
+                    // This requires knowledge of the 'kin' table structure.
                 }
 
                 function calculateAge(dob) {

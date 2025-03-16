@@ -115,7 +115,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="firstName">First Name: </label>
-                                                                <input type="text" name="firstName" id="firstName" disabled>
+                                                                <input type="text" name="firstName" id="firstNameModal" disabled>
                                                             </td>
                                                         </div>
                                                     </div>
@@ -145,7 +145,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="dob">Date of Birth: </label>
-                                                                <input type="date" name="dob" id="dob" disabled>
+                                                                <input type="date" name="dob" id="dobModal" disabled>
                                                             </td>
                                                         </div>
                                                         <div class="td">
@@ -183,7 +183,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="primaryEmail">Primary Email: </label>
-                                                                <input type="email" name="primaryEmail" id="primaryEmail" disabled>
+                                                                <input type="email" name="primaryEmail" id="primaryEmailModal" disabled>
                                                             </td>
                                                         </div>
                                                         <div class="td">
@@ -201,7 +201,7 @@
                                                         <div>
                                                             <td>
                                                                 <label for="address">Physical Address: </label>
-                                                                <input type="text" name="address" id="address" disabled>
+                                                                <input type="text" name="address" id="addressModal" disabled>
                                                             
                                                                 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3988.434092707864!2d36.9491909!3d-1.5093063!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182fa1d8115929e1%3A0xcbf2a35c7c4f3c4e!2sHalisi%20Family%20Hospital!5e0!3m2!1sen!2ske!4v1731922679979!5m2!1sen!2ske" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                                             </td>
@@ -337,7 +337,7 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="specialization">Specialization: </label>
-                                                                <input type="text" name="specialization" id="specialization" placeholder="..." disabled>
+                                                                <input type="text" name="specialization" id="specializationModal" placeholder="..." disabled>
                                                             </td>
                                                         </div>
                                                     </div>
@@ -387,20 +387,20 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="accountStatus">Account Status: </label>
-                                                                <input type="text" name="accountStatus" id="accountStatus" disabled>
+                                                                <input type="text" name="accountStatus" id="accountStatusModal" disabled>
                                                             </td>
                                                         </div>
                                                         <div class="td">
                                                             <td>
                                                                 <label for="salary">Salary: </label>
-                                                                <input type="text" name="salary" id="salary" placeholder="Ksh. 200,000" disabled>
+                                                                <input type="text" name="salary" id="salaryModal" placeholder="Ksh. 200,000" disabled>
                                                             </td>
                                                         </div>
                                                     </div>
 
                                                     <br>
 
-                                                    <div class="info">
+                                                    <!-- <div class="info">
                                                         <div class="td">
                                                             <td>
                                                                 <label for="room-number">Room Number: </label>
@@ -413,7 +413,7 @@
                                                                 <input type="text" name="salary" id="salary" placeholder="Ksh. 200,000" disabled>
                                                             </td>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </tr>
                                             </tbody>
                                         </div>
@@ -440,8 +440,17 @@
         <?php 
             include '../partials/connect.php';
 
-            $sql = "SELECT doctorId AS ID, CONCAT(firstName, ' ', IFNULL(middleName, ''), ' ', lastName) AS Name, position AS Position, address AS Address, primaryEmail AS Email, primaryNumber AS Number, salutation, dob, secondaryNumber, secondaryEmail, specialization, workingHoursWeekdays, workingHoursWeekends, accountStatus, salary FROM users WHERE accountStatus LIKE 'Inactive'";
+            $sql = "SELECT doctorId AS ID, CONCAT(firstName, ' ', IFNULL(middleName, ''), ' ', lastName) AS Name, position AS Position, address AS Address, primaryEmail AS Email, primaryNumber AS Number, salutation, dob, secondaryNumber, secondaryEmail, specialization, workingHoursWeekdays, workingHoursWeekends, accountStatus, salary, firstKinId, secondKinId FROM users WHERE accountStatus LIKE 'Inactive'";
             $result = $conn->query($sql);
+
+            $proceduresSql = "SELECT id, procedureName FROM procedures";
+            $proceduresResult = $conn->query($proceduresSql);
+            $procedures = [];
+            if ($proceduresResult->num_rows > 0) {
+                while ($row = $proceduresResult->fetch_assoc()) {
+                    $procedures[$row['id']] = $row['procedureName'];
+                }
+            }
 
             echo '<script>';
             echo 'var db = { clients: [';
@@ -454,7 +463,7 @@
                     echo implode(',', $clients);
                 }
 
-            echo '] };';
+            echo '], procedures: ' . json_encode($procedures) . ' };';
             echo '</script>';
 
             $conn->close();
@@ -481,7 +490,14 @@
                         { name: "Name", type: "text", width: 100 },
                         { name: "Position", type: "text", width: 50 },
                         { name: "Address", type: "text", width: 100 },
-                        { name: "Email", type: "email", title: "Contact Info" }
+                        { name: "Email", type: "email", title: "Contact Info" },
+                        {
+                            name: "Specialization",
+                            title: "Specialization",
+                            itemTemplate: function(value, item) {
+                                return db.procedures[item.specialization] || "N/A";
+                            }
+                        }
                     ],
 
                     rowClick: function (args) {
@@ -510,7 +526,7 @@
                             item.Email.toLowerCase().includes(filter)
                         );
                     });
-
+                    
                     // if (filteredData.length === 0) {
                     //     $(`#${noMatchMessageId}`).remove();
 
@@ -525,37 +541,42 @@
                 });
 
                 function displayClientDetails(clientData) {
-                    const weekdayTimes = clientData.workingHoursWeekdays.split(' - ');
-                    const weekendTimes = clientData.workingHoursWeekends.split(' - ');
+                    const weekdayTimes = clientData.workingHoursWeekdays?.split(' - ');
+                    const weekendTimes = clientData.workingHoursWeekends?.split(' - ');
 
-                    const weekdayStart = convertTo24HourFormat(weekdayTimes[0]);
-                    const weekdayEnd = convertTo24HourFormat(weekdayTimes[1]);
-                    const weekendStart = convertTo24HourFormat(weekendTimes[0]);
-                    const weekendEnd = convertTo24HourFormat(weekendTimes[1]);
+                    const weekdayStart = weekdayTimes ? convertTo24HourFormat(weekdayTimes[0]) : '';
+                    const weekdayEnd = weekdayTimes ? convertTo24HourFormat(weekdayTimes[1]) : '';
+                    const weekendStart = weekendTimes ? convertTo24HourFormat(weekendTimes[0]) : '';
+                    const weekendEnd = weekendTimes ? convertTo24HourFormat(weekendTimes[1]) : '';
 
                     $('#sal').val(clientData.salutation);
-                    $('#firstName').val(clientData.Name.split(' ')[0]);
-                    $('#middlename').val(clientData.Name.split(' ')[1]);
+                    $('#firstNameModal').val(clientData.Name.split(' ')[0]);
+                    $('#middlename').val(clientData.Name.split(' ')[1] || ''); // Handle potentially missing middle name
                     $('#lastname').val(clientData.Name.split(' ')[2]);
 
-                    $('#dob').val(clientData.dob);
+                    $('#dobModal').val(clientData.dob);
                     $('#age').val(calculateAge(clientData.dob));
 
                     $('#primaryNumber').val(clientData.Number);
-                    $('#secondaryNumber').val(clientData.secondaryNumber);
-                    $('#primaryEmail').val(clientData.Email);
-                    $('#secondaryEmail').val(clientData.secondaryEmail);
-                    $('#address').val(clientData.Address);
+                    $('#secondaryNumber').val(clientData.secondaryNumber || ''); // Handle potentially missing secondary number
+                    $('#primaryEmailModal').val(clientData.Email);
+                    $('#secondaryEmail').val(clientData.secondaryEmail || ''); // Handle potentially missing secondary email
+                    $('#addressModal').val(clientData.Address);
 
                     $('#weekdayStart').val(weekdayStart);
                     $('#weekdayEnd').val(weekdayEnd);
                     $('#weekendStart').val(weekendStart);
                     $('#weekendEnd').val(weekendEnd);
-                    $('#accountStatus').val(clientData.accountStatus);
-                    $('#salary').val(clientData.salary);
+                    $('#accountStatusModal').val(clientData.accountStatus);
+                    $('#salaryModal').val('Ksh. ' + clientData.salary);
 
                     $('#user-type').val(clientData.Position);
-                    $('#specialization').val(clientData.specialization);
+                    $('#specializationModal').val(db.procedures[clientData.specialization] || "N/A");
+                    console.log("Specialization ID:", clientData.specialization);
+                    console.log("Procedure Name:", db.procedures[clientData.specialization] || "N/A");
+
+                    // TODO: Fetch and display emergency contact information using firstKinId and secondKinId
+                    // This requires knowledge of the 'kin' table structure.
                 }
 
                 function calculateAge(dob) {

@@ -237,7 +237,8 @@
                                                                 <label for="visitFor">Checkup Type: </label>
                                                                 <!-- <input type="test" name="visitFor" id="visitFor"> -->
                                                                 <br>
-                                                                <select name="visitFor" id="visitFor" style="width: 100%;" disabled>
+                                                                <select name="visitFor" id="visitFor" style="width: 100%;">
+                                                                    <option value="" disabled selected>Select a specialization</option>
                                                                     <?php
                                                                         $procedures = $conn->query("SELECT id, procedureName FROM procedures WHERE status='available'");
                                                                         while($procedure = $procedures->fetch_assoc()) {
@@ -585,7 +586,7 @@
             const doctorSelect = document.getElementById('docAssigned');
 
             if(procedure) {
-                fetch(`../partials/get_doctors.php?procedure=${encodeURIComponent(procedure)}`)
+                fetch(`../partials/get_doctors.php?specialization=${encodeURIComponent(procedure)}`)
                     .then(response => response.json())
                     .then(doctors => {
                         doctorSelect.innerHTML = '<option value="" disabled selected>Select Doctor</option>';
@@ -595,12 +596,12 @@
                             option.textContent = doctor.doctorName;
                             doctorSelect.appendChild(option);
                         });
-                        doctors.forEach(doctor => {
-                            const option = document.createElement('option');
-                            option.value = doctor.doctorId;
-                            option.textContent = doctor.doctorName;
-                            doctorSelect.appendChild(option);
-                        });
+                        // doctors.forEach(doctor => {
+                        //     const option = document.createElement('option');
+                        //     option.value = doctor.doctorId;
+                        //     option.textContent = doctor.doctorName;
+                        //     doctorSelect.appendChild(option);
+                        // });
                         doctorSelect.disabled = false;
                         validateForm();
                     });
