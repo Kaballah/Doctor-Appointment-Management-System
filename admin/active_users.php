@@ -218,31 +218,14 @@
                                                     <div class="info">
                                                         <div class="td">
                                                             <td>
-                                                                <label for="sal">Salutation: </label>
-                                                                <input type="text" name="sal" id="sal" placeholder="Dr." disabled>
+                                                                <label for="sal1">Salutation: </label>
+                                                                <input type="text" name="sal1" id="sal1" placeholder="Dr." disabled>
                                                             </td>
                                                         </div>
                                                         <div class="td">
                                                             <td>
-                                                                <label for="surname">Surname: </label>
-                                                                <input type="text" name="surname" id="surname" placeholder="Kaballah" disabled>
-                                                            </td>
-                                                        </div>
-                                                    </div>
-
-                                                    <br>
-
-                                                    <div class="info">
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="middlename">Middle Name: </label>
-                                                                <input type="text" name="middlename" id="middlename" placeholder="Kaballah" disabled>
-                                                            </td>
-                                                        </div>
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="lastname">Last Name: </label>
-                                                                <input type="text" name="lastname" id="lastname" placeholder="Ronnie" disabled>
+                                                                <label for="surname1">Surname: </label>
+                                                                <input type="text" name="surname1" id="surname1" placeholder="Kaballah" disabled>
                                                             </td>
                                                         </div>
                                                     </div>
@@ -252,14 +235,31 @@
                                                     <div class="info">
                                                         <div class="td">
                                                             <td>
-                                                                <label for="number">Tel Number: </label>
-                                                                <input type="tel" name="number" id="number" placeholder="0712345678" disabled>
+                                                                <label for="middlename1">Middle Name: </label>
+                                                                <input type="text" name="middlename1" id="middlename1" placeholder="Kaballah" disabled>
                                                             </td>
                                                         </div>
                                                         <div class="td">
                                                             <td>
-                                                                <label for="email">Email: </label>
-                                                                <input type="email" name="email" id="email" placeholder="ronnie@gmail.com" disabled>
+                                                                <label for="lastname1">Last Name: </label>
+                                                                <input type="text" name="lastname1" id="lastname1" placeholder="Ronnie" disabled>
+                                                            </td>
+                                                        </div>
+                                                    </div>
+
+                                                    <br>
+
+                                                    <div class="info">
+                                                        <div class="td">
+                                                            <td>
+                                                                <label for="number1">Tel Number: </label>
+                                                                <input type="tel" name="number1" id="number1" placeholder="0712345678" disabled>
+                                                            </td>
+                                                        </div>
+                                                        <div class="td">
+                                                            <td>
+                                                                <label for="email1">Email: </label>
+                                                                <input type="email" name="email1" id="email1" placeholder="ronnie@gmail.com" disabled>
                                                             </td>
                                                         </div>
                                                     </div>
@@ -272,31 +272,14 @@
                                                     <div class="info">
                                                         <div class="td">
                                                             <td>
-                                                                <label for="sal">Salutation: </label>
-                                                                <input type="text" name="sal" id="sal" placeholder="Dr." disabled>
+                                                                <label for="sal2">Salutation: </label>
+                                                                <input type="text" name="sal2" id="sal2" placeholder="Dr." disabled>
                                                             </td>
                                                         </div>
                                                         <div class="td">
                                                             <td>
-                                                                <label for="surname">Surname:</label>
-                                                                <input type="text" name="surname" id="surname" placeholder="Kaballah" disabled>
-                                                            </td>
-                                                        </div>
-                                                    </div>
-
-                                                    <br>
-
-                                                    <div class="info">
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="middlename">Middle Name: </label>
-                                                                <input type="text" name="middlename" id="middlename" placeholder="Kaballah" disabled>
-                                                            </td>
-                                                        </div>
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="lastname">Last Name: </label>
-                                                                <input type="text" name="lastname" id="lastname" placeholder="Ronnie" disabled>
+                                                                <label for="surname2">Surname:</label>
+                                                                <input type="text" name="surname2" id="surname2" placeholder="Kaballah" disabled>
                                                             </td>
                                                         </div>
                                                     </div>
@@ -306,14 +289,31 @@
                                                     <div class="info">
                                                         <div class="td">
                                                             <td>
-                                                                <label for="number">Tel Number: </label>
-                                                                <input type="tel" name="number" id="number" placeholder="0712345678" disabled>
+                                                                <label for="middlename2">Middle Name: </label>
+                                                                <input type="text" name="middlename2" id="middlename2" placeholder="Kaballah" disabled>
                                                             </td>
                                                         </div>
                                                         <div class="td">
                                                             <td>
-                                                                <label for="email">Email: </label>
-                                                                <input type="email" name="email" id="email" placeholder="ronnie@gmail.com" disabled>
+                                                                <label for="lastname2">Last Name: </label>
+                                                                <input type="text" name="lastname2" id="lastname2" placeholder="Ronnie" disabled>
+                                                            </td>
+                                                        </div>
+                                                    </div>
+
+                                                    <br>
+
+                                                    <div class="info">
+                                                        <div class="td">
+                                                            <td>
+                                                                <label for="number2">Tel Number: </label>
+                                                                <input type="tel" name="number2" id="number2" placeholder="0712345678" disabled>
+                                                            </td>
+                                                        </div>
+                                                        <div class="td">
+                                                            <td>
+                                                                <label for="email2">Email: </label>
+                                                                <input type="email" name="email2" id="email2" placeholder="ronnie@gmail.com" disabled>
                                                             </td>
                                                         </div>
                                                     </div>
@@ -540,6 +540,21 @@
                     const weekendStart = weekendTimes ? convertTo24HourFormat(weekendTimes[0]) : '';
                     const weekendEnd = weekendTimes ? convertTo24HourFormat(weekendTimes[1]) : '';
 
+                    // Clear previous emergency contact information
+                    $('#sal1').val('');
+                    $('#surname1').val('');
+                    $('#middlename1').val('');
+                    $('#lastname1').val('');
+                    $('#number1').val('');
+                    $('#email1').val('');
+                    $('#sal2').val('');
+                    $('#surname2').val('');
+                    $('#middlename2').val('');
+                    $('#lastname2').val('');
+                    $('#number2').val('');
+                    $('#email2').val('');
+
+
                     $('#sal').val(clientData.salutation);
                     $('#firstNameModal').val(clientData.Name.split(' ')[0]);
                     $('#middlename').val(clientData.Name.split(' ')[1] || ''); // Handle potentially missing middle name
@@ -563,11 +578,42 @@
 
                     $('#user-type').val(clientData.Position);
                     $('#specializationModal').val(db.procedures[clientData.specialization] || "N/A");
+
                     console.log("Specialization ID:", clientData.specialization);
                     console.log("Procedure Name:", db.procedures[clientData.specialization] || "N/A");
 
-                    // TODO: Fetch and display emergency contact information using firstKinId and secondKinId
-                    // This requires knowledge of the 'kin' table structure.
+                    // Fetch and display emergency contact information using firstKinId and secondKinId
+                    $.ajax({
+                        url: '../partials/get_emergency_contacts.php',
+                        type: 'GET',
+                        data: {
+                            firstKinId: clientData.firstKinId,
+                            secondKinId: clientData.secondKinId
+                        },
+                        dataType: 'json',
+                        success: function(contacts) {
+                            if (contacts.contact1) {
+                                $('#sal1').val(contacts.contact1.salutation);
+                                $('#surname1').val(contacts.contact1.surname);
+                                $('#middlename1').val(contacts.contact1.middle_name);
+                                $('#lastname1').val(contacts.contact1.last_name);
+                                $('#number1').val(contacts.contact1.phone_number);
+                                $('#email1').val(contacts.contact1.email);
+                            }
+                            if (contacts.contact2) {
+                                $('#sal2').val(contacts.contact2.salutation);
+                                $('#surname2').val(contacts.contact2.surname);
+                                $('#middlename2').val(contacts.contact2.middle_name);
+                                $('#lastname2').val(contacts.contact2.last_name);
+                                $('#number2').val(contacts.contact2.phone_number);
+                                $('#email2').val(contacts.contact2.email);
+                            }
+                        },
+                        
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching emergency contacts:", error);
+                        }
+                    });
                 }
 
                 function calculateAge(dob) {
