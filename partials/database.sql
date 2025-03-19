@@ -74,6 +74,9 @@ CREATE TABLE appointments (
     FOREIGN KEY (doctorId) REFERENCES users(doctorId)         -- Foreign key reference to the user's table (doctor's table)
 );
 
+-- Fix: Add DEFAULT CURRENT_TIMESTAMP to dateCreated column in appointments table
+ALTER TABLE appointments MODIFY COLUMN dateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
 INSERT INTO appointments (appointmentId, patientFirstName, patientLastName, patientEmail, phoneNumber, yob, visitFor, doctorId, status, dateOfAppointment, timeOfAppointment, doctorNote)
 VALUES
 ('A12345678', 'John', 'Doe', 'john.doe@example.com', '123-456-7890', 1990, 'General Checkup', 1, 'New', '2024-12-15', '09:00', 'Routine checkup for overall health'),
