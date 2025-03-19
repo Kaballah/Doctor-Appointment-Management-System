@@ -164,7 +164,7 @@
         $password = md5(trim($_POST['password']));
         
         // Check if user exists with email/username
-        $sql = "SELECT doctorId, primaryEmail, position, password, firstname, lastname FROM users WHERE primaryEmail = ?";
+        $sql = "SELECT doctorId, primaryEmail, position, password, firstname, lastname, accountStatus FROM users WHERE primaryEmail = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -173,49 +173,44 @@
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
 
+            // Verify password
+            if ($user['password'] === $password) {
 
-                // Verify password
-                if ($user['password'] === $password) {
-
-                    // Check account status
-                    if ($user['accountStatus'] === 'New') {
-                        $_SESSION['error'] = "Your account is pending approval.";
-                        header("Location: ../auth/login.php");
-                        exit();
-                    } elseif ($user['accountStatus'] === 'Inactive') {
-                        $_SESSION['error'] = "Your account is inactive.";
-                        header("Location: ../auth/login.php");
-                        exit();
-                    }
-                    
-                    $_SESSION['password'] = $user['password']; // Store the hashed password
-                    $_SESSION['user_id'] = $user['doctorId'];
-                    $_SESSION['email'] = $user['primaryEmail'];
-                    $_SESSION['position'] = $user['position'];
-                    $_SESSION['firstname'] = $user['firstname'];
-                    $_SESSION['lastname'] = $user['lastname'];
-                    $_SESSION['authenticated'] = true;
-
-                    // Redirect based on user position
-                    switch($_SESSION['position']) {
-                        case 'admin':
-                            header("Location: ../admin/dashboard.php");
-                            break;
-                        case 'doctor':
-                            header("Location: ../doctor/dashboard.php");
-                            break;
-                        case 'receptionist':
-                            header("Location: ../receptionist/dashboard.php");
-                            break;
-                        default:
-                            header("Location: ../views/dashboard.php");
-                    }
-                    exit();
-                } else {
-                    $_SESSION['error'] = "Invalid credentials";
+                // Check account status
+                if ($user['accountStatus'] !== 'Active') {
+                    $_SESSION['error'] = "Your account needs to be approved before you can log in.";
                     header("Location: ../auth/login.php");
                     exit();
                 }
+                
+                $_SESSION['password'] = $user['password']; // Store the hashed password
+                $_SESSION['user_id'] = $user['doctorId'];
+                $_SESSION['email'] = $user['primaryEmail'];
+                $_SESSION['position'] = $user['position'];
+                $_SESSION['firstname'] = $user['firstname'];
+                $_SESSION['lastname'] = $user['lastname'];
+                $_SESSION['authenticated'] = true;
+
+                // Redirect based on user position
+                switch($_SESSION['position']) {
+                    case 'admin':
+                        header("Location: ../admin/dashboard.php");
+                        break;
+                    case 'doctor':
+                        header("Location: ../doctor/dashboard.php");
+                        break;
+                    case 'receptionist':
+                        header("Location: ../receptionist/dashboard.php");
+                        break;
+                    default:
+                        header("Location: ../views/dashboard.php");
+                }
+                exit();
+            } else {
+                $_SESSION['error'] = "Invalid credentials";
+                header("Location: ../auth/login.php");
+                exit();
+            }
         } else {
             $_SESSION['error'] = "User not found";
             header("Location: ../auth/login.php");

@@ -131,3 +131,17 @@ aside {
         background-position: 200px 0;
     }
 }
+
+.sidebar .user-panel .image .avatar-image {
+  width: 60px !important;  /* Adjust as needed */
+  height: 60px !important; /* Adjust as needed */
+}
+
+.sidebar .user-panel .info .username-text {
+  font-size: 1.2em !important; /* Adjust as needed */
+  font-weight: bold !important;
+}
+
+.sidebar .user-panel .info .usertype-text {
+  font-size: 0.8em !important; /* Adjust as needed */
+}
