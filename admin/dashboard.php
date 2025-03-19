@@ -476,13 +476,13 @@
                                     </ul>
                                 </div>
                             <div class="card-footer text-center">
-                                <a href="javascript:">View All Users</a>
+                                <a href="users.php">View All Users</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <section class="col-md-6 connectedSortable" style="border: 1px solid red;">
+                    <div class="row" style="width: 100%">
+                        <section class="col-lg-7 connectedSortable">
                             <div class="card">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
@@ -517,7 +517,7 @@
                             </div>
                         </section>
 
-                        <section class="col-md-6 connectedSortable" style="border: 1px solid blue;">
+                        <section class="col-lg-5 connectedSortable">
                             <div class="card bg-gradient-success">
                                 <div class="card-header border-0">
                                     <h3 class="card-title">

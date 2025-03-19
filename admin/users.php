@@ -330,13 +330,13 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="user-type">User Type: </label>
-                                                                <input type="text" name="user-type" id="user-type" placeholder="Doctor" disabled>
+                                                                <select name="user-type" id="user-type" style="width: 20vw;"></select>
                                                             </td>
                                                         </div>
                                                         <div class="td">
                                                             <td>
                                                                 <label for="specialization">Specialization: </label>
-                                                                <input type="text" name="specialization" id="specializationModal" placeholder="..." disabled>
+                                                                <select name="specialization" id="specializationModal" style="width: 20vw;"></select>
                                                             </td>
                                                         </div>
                                                     </div>
@@ -386,13 +386,13 @@
                                                         <div class="td">
                                                             <td>
                                                                 <label for="accountStatus">Account Status: </label>
-                                                                <input type="text" name="accountStatus" id="accountStatusModal" disabled>
+                                                                <select name="accountStatus" id="accountStatusModal" style="width: 20vw;"></select>
                                                             </td>
                                                         </div>
                                                         <div class="td">
                                                             <td>
                                                                 <label for="salary">Salary: </label>
-                                                                <input type="text" name="salary" id="salaryModal" placeholder="Ksh. 200,000" disabled>
+                                                                <input type="text" name="salary" id="salaryModal" placeholder="Ksh. 200,000">
                                                             </td>
                                                         </div>
                                                     </div>
@@ -424,7 +424,7 @@
                 
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Edit Information</button>
+                        <button type="button" class="btn btn-primary" id="saveChangesBtn" disabled>Save Changes</button>
                     </div>
                 </div>
             </div>
@@ -450,7 +450,6 @@
                     $procedures[$row['id']] = $row['procedureName'];
                 }
             }
-
 
             echo '<script>';
             echo 'var db = { clients: [';
@@ -535,46 +534,43 @@
 
                 function displayClientDetails(clientData) {
                    console.log(clientData);
-                   $('#sal').val(clientData.salutation);
-                   const nameParts = clientData.Name.split(' ');
-                   $('#firstNameModal').val(nameParts[0]);
-                   $('#middlename').val(nameParts.slice(1, -1).join(' ') || '');
-                   $('#lastname').val(nameParts[nameParts.length - 1]);
-                   $('#dobModal').val(clientData.dob);
-                   $('#age').val(calculateAge(clientData.dob));
-                   $('#primaryNumber').val(clientData.Number);
-                   $('#secondaryNumber').val(clientData.secondaryNumber || '');
-                   $('#primaryEmailModal').val(clientData.Email);
-                   $('#secondaryEmail').val(clientData.secondaryEmail || '');
-                   $('#addressModal').val(clientData.Address);
-                   $('#weekdayStart').val(clientData.workingHoursWeekdays);
-                   $('#weekdayEnd').val(clientData.workingHoursEndWeekdays);
-                   $('#weekendStart').val(clientData.workingHoursWeekends);
-                   $('#weekendEnd').val(clientData.workingHoursEndWeekends);
-                   $('#accountStatusModal').val(clientData.Status);
-                   $('#salaryModal').val('Ksh. ' + clientData.salary);
-                   $('#user-type').val(clientData.Position);
-                    $('#specializationModal').val(db.procedures[clientData.specialization] || "N/A");
+
+                    // Helper function to set input values, handling undefined and null
+                    function setInputValue(selector, value) {
+                        $(selector).val(value || 'N/A');
+                    }
+
+                    // Personal Info
+                    setInputValue('#sal', clientData.salutation);
+                    const nameParts = clientData.Name.split(' ');
+                    setInputValue('#firstNameModal', nameParts[0]);
+                    setInputValue('#middlename', nameParts.slice(1, -1).join(' ') || 'N/A');
+                    setInputValue('#lastname', nameParts[nameParts.length - 1]);
+                    setInputValue('#dobModal', clientData.dob);
+                    setInputValue('#age', calculateAge(clientData.dob));
+
+                    // Contact Info
+                    setInputValue('#primaryNumber', clientData.Number);
+                    setInputValue('#secondaryNumber', clientData.secondaryNumber);
+                    setInputValue('#primaryEmailModal', clientData.Email);
+                    setInputValue('#secondaryEmail', clientData.secondaryEmail);
+                    setInputValue('#addressModal', clientData.Address);
+
+                    // Work Info
+                    setInputValue('#weekdayStart', clientData.workingHoursWeekdays);
+                    setInputValue('#weekdayEnd', clientData.workingHoursEndWeekdays);
+                    setInputValue('#weekendStart', clientData.workingHoursWeekends);
+                    setInputValue('#weekendEnd', clientData.workingHoursEndWeekends);
+                    setInputValue('#accountStatusModal', clientData.Status);
+                    setInputValue('#salaryModal', 'Ksh. ' + (clientData.salary || 'N/A'));
+                    // setInputValue('#user-type', clientData.Position);
+                    // setInputValue('#specializationModal', db.procedures[clientData.specialization] || "N/A");
 
                     console.log("Specialization ID:", clientData.specialization);
                     console.log("Procedure Name:", db.procedures[clientData.specialization] || "N/A");
 
-                   // TODO: Fetch and display emergency contact information using firstKinId and secondKinId
-                   // This requires knowledge of the 'kin' table structure.
                    // Clear previous emergency contact information
-                   $('#sal1').val('');
-                    $('#surname1').val('');
-                    $('#middlename1').val('');
-                    $('#lastname1').val('');
-                    $('#number1').val('');
-                    $('#email1').val('');
-                    $('#sal2').val('');
-                    $('#surname2').val('');
-                    $('#middlename2').val('');
-                    $('#lastname2').val('');
-                    $('#number2').val('');
-                    $('#email2').val('');
-
+                    $('#sal1, #surname1, #middlename1, #lastname1, #number1, #email1, #sal2, #surname2, #middlename2, #lastname2, #number2, #email2').val('');
 
                     // Fetch and display emergency contact information using firstKinId and secondKinId
                     $.ajax({
@@ -587,26 +583,106 @@
                         dataType: 'json',
                         success: function(contacts) {
                             if (contacts.contact1) {
-                            $('#sal1').val(contacts.contact1.salutation);
-                            $('#surname1').val(contacts.contact1.surname);
-                            $('#middlename1').val(contacts.contact1.middle_name);
-                            $('#lastname1').val(contacts.contact1.last_name);
-                            $('#number1').val(contacts.contact1.phone_number);
-                            $('#email1').val(contacts.contact1.email);
+                                setInputValue('#sal1', contacts.contact1.salutation);
+                                setInputValue('#surname1', contacts.contact1.surname);
+                                setInputValue('#middlename1', contacts.contact1.middle_name);
+                                setInputValue('#lastname1', contacts.contact1.last_name);
+                                setInputValue('#number1', contacts.contact1.phone_number);
+                                setInputValue('#email1', contacts.contact1.email);
                             }
                             if (contacts.contact2) {
-                            $('#sal2').val(contacts.contact2.salutation);
-                            $('#surname2').val(contacts.contact2.surname);
-                            $('#middlename2').val(contacts.contact2.middle_name);
-                            $('#lastname2').val(contacts.contact2.last_name);
-                            $('#number2').val(contacts.contact2.phone_number);
-                            $('#email2').val(contacts.contact2.email);
+                                setInputValue('#sal2', contacts.contact2.salutation);
+                                setInputValue('#surname2', contacts.contact2.surname);
+                                setInputValue('#middlename2', contacts.contact2.middle_name);
+                                setInputValue('#lastname2', contacts.contact2.last_name);
+                                setInputValue('#number2', contacts.contact2.phone_number);
+                                setInputValue('#email2', contacts.contact2.email);
                             }
                         },
                         error: function(xhr, status, error) {
                             console.error("Error fetching emergency contacts:", error);
                         }
                     });
+
+                    // Populate dropdowns
+                    $.ajax({
+                        url: '../partials/get_user_types.php',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(userTypes) {
+                            $('#user-type').empty(); // Clear existing options
+                            $.each(userTypes, function(index, type) {
+                                $('#user-type').append($('<option>', {
+                                    value: type,
+                                    text: type
+                                }));
+                            });
+                            // Pre-select the user's current type
+                            $('#user-type').val(clientData.Position);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching user types:", error);
+                        }
+                    });
+
+                    $.ajax({
+                        url: '../partials/get_specializations.php',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(specializations) {
+                            $('#specializationModal').empty(); // Clear existing options
+                            $.each(specializations, function(index, spec) {
+                                $('#specializationModal').append($('<option>', {
+                                    value: spec.id,
+                                    text: spec.procedureName
+                                }));
+                            });
+                            // Pre-select the user's current specialization
+                            $('#specializationModal').val(clientData.specialization);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching specializations:", error);
+                        }
+                    });
+
+                    $.ajax({
+                        url: '../partials/get_account_statuses.php',
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(statuses) {
+                            $('#accountStatusModal').empty(); // Clear existing options
+                            $.each(statuses, function(index, status) {
+                                $('#accountStatusModal').append($('<option>', {
+                                    value: status,
+                                    text: status
+                                }));
+                            });
+                            // Pre-select the user's current status
+                            $('#accountStatusModal').val(clientData.accountStatus);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching account statuses:", error);
+                        }
+                    });
+    
+                // Enable/disable specialization based on user type
+                function updateSpecializationDropdown() {
+                    if ($('#user-type').val().toLowerCase() === 'doctor') {
+                        $('#specializationModal').prop('disabled', false);
+                        //Pre-select the user's current specialization
+                        $('#specializationModal').val(clientData.specialization);
+
+                    } else {
+                        $('#specializationModal').prop('disabled', true).val('N/A');
+                    }
+                }
+
+                // Initial state and event listener
+                updateSpecializationDropdown();
+                $('#user-type').on('change', updateSpecializationDropdown);
+    
+                    // Store initial values and track changes
+                    trackChanges();
                 }
 
                 function calculateAge(dob) {
@@ -633,6 +709,30 @@
                     }
 
                     return (hours < 10 ? '0' : '') + hours + ":00";
+                }
+
+                // Function to track changes and enable/disable the Save Changes button
+                function trackChanges() {
+                    const initialValues = {};
+                    const inputFields = $('#user-type, #specializationModal, #accountStatusModal, #salaryModal');
+
+                    // Store initial values
+                    inputFields.each(function() {
+                        initialValues[this.id] = $(this).val();
+                    });
+
+                    // Listen for changes
+                    inputFields.on('input change', function() {
+                        let hasChanged = false;
+                        inputFields.each(function() {
+                            if ($(this).val() !== initialValues[this.id]) {
+                                hasChanged = true;
+                                return false; // Exit loop early if a change is found
+                            }
+                        });
+
+                        $('#saveChangesBtn').prop('disabled', !hasChanged);
+                    });
                 }
             });
         </script>

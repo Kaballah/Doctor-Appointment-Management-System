@@ -14,6 +14,13 @@
 
         <?php include '../styles/styles.php'?>
         <link rel="stylesheet" href="../styles/appointment.css">
+        <style>
+            /* Style for dropdown hover effect */
+            select option:hover {
+                background-color: #007bff; /* Replace with actual theme color if different */
+                color: white;
+            }
+        </style>
     </head>
 
     <body>
@@ -324,97 +331,78 @@
                                         </div>
 
                                         <div class="tab-pane fade" id="work-information" role="tabpanel" aria-labelledby="work-information-tab">
-                                            <tbody>
-                                                <tr>
-                                                    <h4>Role</h4>
-                                                    <div class="info">
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="user-type">User Type: </label>
-                                                                <input type="text" name="user-type" id="user-type" placeholder="Doctor" disabled>
-                                                            </td>
-                                                        </div>
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="specialization">Specialization: </label>
-                                                                <input type="text" name="specialization" id="specializationModal" placeholder="..." disabled>
-                                                            </td>
-                                                        </div>
+                                        <tbody>
+                                            <tr>
+                                                <h4>Role</h4>
+                                                <div class="info">
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="user-type">User Type: </label>
+                                                            <select name="user-type" id="user-type" style="width: 100%; padding: 0.375rem 0.75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"></select>
+                                                        </td>
                                                     </div>
-
-                                                    <br>
-                                                    <hr>
-
-                                                    <h4>Weekdays</h4>
-                                                    <div class="info">
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="weekdayStart">Start: </label>
-                                                                <input type="time" name="weekdayStart" id="weekdayStart" disabled>
-                                                            </td>
-                                                        </div>
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="weekdayEnd">End: </label>
-                                                                <input type="time" name="weekdayEnd" id="weekdayEnd" disabled>
-                                                            </td>
-                                                        </div>
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="specialization">Specialization: </label>
+                                                            <select name="specialization" id="specializationModal" style="width: 100%; padding: 0.375rem 0.75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"></select>
+                                                        </td>
                                                     </div>
+                                                </div>
+                                                <br>
+                                                <hr>
 
-                                                    <br>
-
-                                                    <h4>Weekends</h4>
-                                                    <div class="info">
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="weekendStart">Start: </label>
-                                                                <input type="time" name="weekendStart" id="weekendStart" disabled>
-                                                            </td>
-                                                        </div>
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="weekendEnd">End: </label>
-                                                                <input type="time" name="weekendEnd" id="weekendEnd" disabled>
-                                                            </td>
-                                                        </div>
+                                                <h4>Weekdays</h4>
+                                                <div class="info">
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="weekdayStart">Start: </label>
+                                                            <input type="time" name="weekdayStart" id="weekdayStart" disabled>
+                                                        </td>
                                                     </div>
-
-                                                    <br>
-                                                    <hr>
-
-                                                    <h4>Other Information</h4>
-                                                    <div class="info">
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="accountStatus">Account Status: </label>
-                                                                <input type="text" name="accountStatus" id="accountStatusModal" disabled>
-                                                            </td>
-                                                        </div>
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="salary">Salary: </label>
-                                                                <input type="text" name="salary" id="salaryModal" placeholder="Ksh. 200,000" disabled>
-                                                            </td>
-                                                        </div>
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="weekdayEnd">End: </label>
+                                                            <input type="time" name="weekdayEnd" id="weekdayEnd" disabled>
+                                                        </td>
                                                     </div>
+                                                </div>
 
-                                                    <br>
+                                                <br>
 
-                                                    <!-- <div class="info">
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="room-number">Room Number: </label>
-                                                                <input type="text" name="room-number" id="room-number" placeholder="B12" disabled>
-                                                            </td>
-                                                        </div>
-                                                        <div class="td">
-                                                            <td>
-                                                                <label for="salary">Salary: </label>
-                                                                <input type="text" name="salary" id="salary" placeholder="Ksh. 200,000" disabled>
-                                                            </td>
-                                                        </div>
-                                                    </div> -->
-                                                </tr>
+                                                <h4>Weekends</h4>
+                                                <div class="info">
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="weekendStart">Start: </label>
+                                                            <input type="time" name="weekendStart" id="weekendStart" disabled>
+                                                        </td>
+                                                    </div>
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="weekendEnd">End: </label>
+                                                            <input type="time" name="weekendEnd" id="weekendEnd" disabled>
+                                                        </td>
+                                                    </div>
+                                                </div>
+
+                                                <br>
+                                                <hr>
+
+                                                <h4>Other Information</h4>
+                                                <div class="info">
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="accountStatus">Account Status: </label>
+                                                            <select name="accountStatus" id="accountStatusModal" style="width: 100%; padding: 0.375rem 0.75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"></select>
+                                                        </td>
+                                                    </div>
+                                                    <div class="td">
+                                                        <td>
+                                                            <label for="salary">Salary: </label>
+                                                            <input type="text" name="salary" id="salaryModal" placeholder="Ksh. 200,000">
+                                                        </td>
+                                                    </div>
+                                                </div>
                                             </tbody>
                                         </div>
                                     </div>
@@ -425,7 +413,7 @@
                 
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Edit Information</button>
+                        <button type="button" class="btn btn-primary" id="saveChangesBtn" disabled>Save Changes</button>
                     </div>
                 </div>
             </div>
@@ -470,178 +458,247 @@
         ?>
 
         <script>
-            $(function () {
-                const originalData = db.clients;
-                const noMatchMessageId = "noMatchMessage";
+        $(function () {
+            const originalData = db.clients;
+            const noMatchMessageId = "noMatchMessage";
 
-                $("#jsGrid1").jsGrid({
-                    // height: "100%",
-                    width: "100%",
+            $("#jsGrid1").jsGrid({
+                width: "100%",
+                sorting: true,
+                paging: true,
+                pageSize: 10,
+                pageButtonCount: 5,
 
-                    sorting: true,
-                    paging: true,
-                    pageSize: 10,
-                    pageButtonCount: 5,
+                data: originalData,
 
-                    data: originalData,
-
-                    fields: [
-                        { name: "ID", type: "text", width: 50 },
-                        { name: "Name", type: "text", width: 100 },
-                        { name: "Position", type: "text", width: 50 },
-                        { name: "Address", type: "text", width: 100 },
-                        { name: "Email", type: "email", title: "Contact Info" },
-                        {
-                            name: "Specialization",
-                            title: "Specialization",
-                            itemTemplate: function(value, item) {
-                                return db.procedures[item.specialization] || "N/A";
-                            }
+                fields: [
+                    { name: "ID", type: "text", width: 50 },
+                    { name: "Name", type: "text", width: 100 },
+                    { name: "Position", type: "text", width: 50 },
+                    { name: "Address", type: "text", width: 100 },
+                    { name: "Email", type: "email", title: "Contact Info" },
+                    {
+                        name: "Specialization",
+                        title: "Specialization",
+                        itemTemplate: function(value, item) {
+                            return db.procedures[item.specialization] || "N/A";
                         }
-                    ],
-
-                    rowClick: function (args) {
-                        const clientData = args.item;
-
-                        displayClientDetails(clientData);
                     }
-                });
+                ],
 
-                $(".jsgrid-header-cell").on("click", function (e) {
-                    e.stopPropagation();
-                });
-                $(".jsgrid-pager").on("click", function (e) {
-                    e.stopPropagation();
-                });
-
-                $("#tableSearch").on("keyup", function () {
-                    const filter = this.value.toLowerCase();
-
-                    const filteredData = originalData.filter(item => {
-                        return (
-                            item.ID.toString().toLowerCase().includes(filter) ||
-                            item.Name.toLowerCase().includes(filter) ||
-                            item.Position.toLowerCase().includes(filter) ||
-                            item.Address.toLowerCase().includes(filter) ||
-                            item.Email.toLowerCase().includes(filter)
-                        );
-                    });
-                    
-                    $("#jsGrid1").jsGrid("option", "data", filteredData);
-                    $("#jsGrid1").jsGrid("option", "pageIndex", 1);
-                });
-
-                function displayClientDetails(clientData) {
-                    const weekdayTimes = clientData.workingHoursWeekdays?.split(' - ');
-                    const weekendTimes = clientData.workingHoursWeekends?.split(' - ');
-
-                    const weekdayStart = weekdayTimes ? convertTo24HourFormat(weekdayTimes[0]) : '';
-                    const weekdayEnd = weekdayTimes ? convertTo24HourFormat(weekdayTimes[1]) : '';
-                    const weekendStart = weekendTimes ? convertTo24HourFormat(weekendTimes[0]) : '';
-                    const weekendEnd = weekendTimes ? convertTo24HourFormat(weekendTimes[1]) : '';
-
-                    // Clear previous emergency contact information
-                    $('#sal1').val('');
-                    $('#surname1').val('');
-                    $('#middlename1').val('');
-                    $('#lastname1').val('');
-                    $('#number1').val('');
-                    $('#email1').val('');
-                    $('#sal2').val('');
-                    $('#surname2').val('');
-                    $('#middlename2').val('');
-                    $('#lastname2').val('');
-                    $('#number2').val('');
-                    $('#email2').val('');
-
-
-                    $('#sal').val(clientData.salutation);
-                    $('#firstNameModal').val(clientData.Name.split(' ')[0]);
-                    $('#middlename').val(clientData.Name.split(' ')[1] || ''); // Handle potentially missing middle name
-                    $('#lastname').val(clientData.Name.split(' ')[2]);
-
-                    $('#dobModal').val(clientData.dob);
-                    $('#age').val(calculateAge(clientData.dob));
-
-                    $('#primaryNumber').val(clientData.Number);
-                    $('#secondaryNumber').val(clientData.secondaryNumber || ''); // Handle potentially missing secondary number
-                    $('#primaryEmailModal').val(clientData.Email);
-                    $('#secondaryEmail').val(clientData.secondaryEmail || ''); // Handle potentially missing secondary email
-                    $('#addressModal').val(clientData.Address);
-
-                    $('#weekdayStart').val(weekdayStart);
-                    $('#weekdayEnd').val(weekdayEnd);
-                    $('#weekendStart').val(weekendStart);
-                    $('#weekendEnd').val(weekendEnd);
-                    $('#accountStatusModal').val(clientData.accountStatus);
-                    $('#salaryModal').val('Ksh. ' + clientData.salary);
-
-                    $('#user-type').val(clientData.Position);
-                    $('#specializationModal').val(db.procedures[clientData.specialization] || "N/A");
-
-                    console.log("Specialization ID:", clientData.specialization);
-                    console.log("Procedure Name:", db.procedures[clientData.specialization] || "N/A");
-
-                    // Fetch and display emergency contact information using firstKinId and secondKinId
-                    $.ajax({
-                        url: '../partials/get_emergency_contacts.php',
-                        type: 'GET',
-                        data: {
-                            firstKinId: clientData.firstKinId,
-                            secondKinId: clientData.secondKinId
-                        },
-                        dataType: 'json',
-                        success: function(contacts) {
-                            if (contacts.contact1) {
-                                $('#sal1').val(contacts.contact1.salutation);
-                                $('#surname1').val(contacts.contact1.surname);
-                                $('#middlename1').val(contacts.contact1.middle_name);
-                                $('#lastname1').val(contacts.contact1.last_name);
-                                $('#number1').val(contacts.contact1.phone_number);
-                                $('#email1').val(contacts.contact1.email);
-                            }
-                            if (contacts.contact2) {
-                                $('#sal2').val(contacts.contact2.salutation);
-                                $('#surname2').val(contacts.contact2.surname);
-                                $('#middlename2').val(contacts.contact2.middle_name);
-                                $('#lastname2').val(contacts.contact2.last_name);
-                                $('#number2').val(contacts.contact2.phone_number);
-                                $('#email2').val(contacts.contact2.email);
-                            }
-                        },
-                        
-                        error: function(xhr, status, error) {
-                            console.error("Error fetching emergency contacts:", error);
-                        }
-                    });
-                }
-
-                function calculateAge(dob) {
-                    var birthDate = new Date(dob);
-                    var age = new Date().getFullYear() - birthDate.getFullYear();
-                    var m = new Date().getMonth() - birthDate.getMonth();
-                    if (m < 0 || (m === 0 && new Date().getDate() < birthDate.getDate())) {
-                        age--;
-                    }
-                    return age;
-                }
-
-                function convertTo24HourFormat(time) {
-                    var timeParts = time.match(/(\d{1,2})\s*(am|pm)/i);
-                    if (!timeParts) return time;
-
-                    var hours = parseInt(timeParts[1]);
-                    var period = timeParts[2].toLowerCase();
-                    
-                    if (period === 'am' && hours === 12) {
-                        hours = 0;
-                    } else if (period === 'pm' && hours !== 12) {
-                        hours += 12;
-                    }
-
-                    return (hours < 10 ? '0' : '') + hours + ":00";
+                rowClick: function (args) {
+                    const clientData = args.item;
+                    displayClientDetails(clientData);
                 }
             });
+
+            $(".jsgrid-header-cell").on("click", function (e) {
+                e.stopPropagation();
+            });
+            $(".jsgrid-pager").on("click", function (e) {
+                e.stopPropagation();
+            });
+
+            $("#tableSearch").on("keyup", function () {
+                const filter = this.value.toLowerCase();
+
+                const filteredData = originalData.filter(item => {
+                    return (
+                        item.ID.toString().toLowerCase().includes(filter) ||
+                        item.Name.toLowerCase().includes(filter) ||
+                        item.Position.toLowerCase().includes(filter) ||
+                        item.Address.toLowerCase().includes(filter) ||
+                        item.Email.toLowerCase().includes(filter)
+                    );
+                });
+                
+                $("#jsGrid1").jsGrid("option", "data", filteredData);
+                $("#jsGrid1").jsGrid("option", "pageIndex", 1);
+            });
+
+            function displayClientDetails(clientData) {
+                // Helper function to set input values, handling undefined and null
+                function setInputValue(selector, value) {
+                    $(selector).val(value || 'N/A');
+                }
+
+                // Personal Info
+                setInputValue('#sal', clientData.salutation);
+                const nameParts = clientData.Name.split(' ');
+                setInputValue('#firstNameModal', nameParts[0]);
+                setInputValue('#middlename', nameParts.slice(1, -1).join(' ') || 'N/A');
+                setInputValue('#lastname', nameParts[nameParts.length - 1]);
+                setInputValue('#dobModal', clientData.dob);
+                setInputValue('#age', calculateAge(clientData.dob));
+
+                // Contact Info
+                setInputValue('#primaryNumber', clientData.Number);
+                setInputValue('#secondaryNumber', clientData.secondaryNumber);
+                setInputValue('#primaryEmailModal', clientData.Email);
+                setInputValue('#secondaryEmail', clientData.secondaryEmail);
+                setInputValue('#addressModal', clientData.Address);
+
+                // Work Info
+                setInputValue('#weekdayStart', clientData.workingHoursWeekdays);
+                setInputValue('#weekdayEnd', clientData.workingHoursEndWeekdays);
+                setInputValue('#weekendStart', clientData.workingHoursWeekends);
+                setInputValue('#weekendEnd', clientData.workingHoursEndWeekends);
+                setInputValue('#accountStatusModal', clientData.Status);
+                setInputValue('#salaryModal', 'Ksh. ' + (clientData.salary || 'N/A'));
+
+                // Clear previous emergency contact information
+                $('#sal1, #surname1, #middlename1, #lastname1, #number1, #email1, #sal2, #surname2, #middlename2, #lastname2, #number2, #email2').val('');
+
+                // Fetch and display emergency contact information using firstKinId and secondKinId
+                $.ajax({
+                    url: '../partials/get_emergency_contacts.php',
+                    type: 'GET',
+                    data: {
+                        firstKinId: clientData.firstKinId,
+                        secondKinId: clientData.secondKinId
+                    },
+                    dataType: 'json',
+                    success: function(contacts) {
+                        if (contacts.contact1) {
+                            setInputValue('#sal1', contacts.contact1.salutation);
+                            setInputValue('#surname1', contacts.contact1.surname);
+                            setInputValue('#middlename1', contacts.contact1.middle_name);
+                            setInputValue('#lastname1', contacts.contact1.last_name);
+                            setInputValue('#number1', contacts.contact1.phone_number);
+                            setInputValue('#email1', contacts.contact1.email);
+                        }
+                        if (contacts.contact2) {
+                            setInputValue('#sal2', contacts.contact2.salutation);
+                            setInputValue('#surname2', contacts.contact2.surname);
+                            setInputValue('#middlename2', contacts.contact2.middle_name);
+                            setInputValue('#lastname2', contacts.contact2.last_name);
+                            setInputValue('#number2', contacts.contact2.phone_number);
+                            setInputValue('#email2', contacts.contact2.email);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching emergency contacts:", error);
+                    }
+                });
+
+                // Populate dropdowns and set initial values
+                $.when(
+                    $.getJSON('../partials/get_user_types.php'),
+                    $.getJSON('../partials/get_specializations.php'),
+                    $.getJSON('../partials/get_account_statuses.php')
+                ).done(function(userTypesData, specializationsData, accountStatusesData) {
+                    // Populate User Type dropdown
+                    var userTypes = userTypesData[0];
+                    var userTypeSelect = $('#user-type');
+                    userTypeSelect.empty();
+                    $.each(userTypes, function(index, type) {
+                        userTypeSelect.append($('<option>', {
+                            value: type,
+                            text: type
+                        }));
+                    });
+                    
+
+                    // Populate Specialization dropdown
+                    var specializations = specializationsData[0];
+                    var specializationSelect = $('#specializationModal');
+                    specializationSelect.empty();
+                    $.each(specializations, function(index, spec) {
+                        specializationSelect.append($('<option>', {
+                            value: spec.id,
+                            text: spec.procedureName
+                        }));
+                    });
+                    
+
+                    // Populate Account Status dropdown
+                    var accountStatuses = accountStatusesData[0];
+                    var accountStatusSelect = $('#accountStatusModal');
+                    accountStatusSelect.empty();
+                    $.each(accountStatuses, function(index, status) {
+                        accountStatusSelect.append($('<option>', {
+                            value: status,
+                            text: status
+                        }));
+                    });
+                    
+
+                    // Set initial values for dropdowns AFTER populating
+                    userTypeSelect.val(clientData.Position);
+                    specializationSelect.val(clientData.specialization);
+                    accountStatusSelect.val(clientData.Status);
+
+                    // Enable/disable specialization based on user type
+                    function updateSpecializationDropdown() {
+                        if ($('#user-type').val() === 'Doctor') {
+                            $('#specializationModal').prop('disabled', false);
+                        } else {
+                            $('#specializationModal').prop('disabled', true).append($('<option>', { value: 'N/A', text: 'N/A' })).val('N/A');
+                        }
+                    }
+
+                    // Initial state and event listener
+                    updateSpecializationDropdown();
+                    $('#user-type').change(updateSpecializationDropdown);
+
+                    // Store initial values and track changes
+                    trackChanges();
+
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("Error fetching dropdown data:", textStatus, errorThrown);
+                });
+            }
+
+            function calculateAge(dob) {
+                var birthDate = new Date(dob);
+                var age = new Date().getFullYear() - birthDate.getFullYear();
+                var m = new Date().getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && new Date().getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+
+            function convertTo24HourFormat(time) {
+                var timeParts = time.match(/(\d{1,2})\s*(am|pm)/i);
+                if (!timeParts) return time;
+
+                var hours = parseInt(timeParts[1]);
+                var period = timeParts[2].toLowerCase();
+                
+                if (period === 'am' && hours === 12) {
+                    hours = 0;
+                } else if (period === 'pm' && hours !== 12) {
+                    hours += 12;
+                }
+
+                return (hours < 10 ? '0' : '') + hours + ":00";
+            }
+
+            // Function to track changes and enable/disable the Save Changes button
+            function trackChanges() {
+                const initialValues = {};
+                const inputFields = $('#user-type, #specializationModal, #accountStatusModal, #salaryModal');
+
+                // Store initial values
+                inputFields.each(function() {
+                    initialValues[this.id] = $(this).val();
+                });
+
+                // Listen for changes
+                inputFields.on('input change', function() {
+                    let hasChanged = false;
+                    inputFields.each(function() {
+                        if ($(this).val() !== initialValues[this.id]) {
+                            hasChanged = true;
+                            return false; // Exit loop early if a change is found
+                        }
+                    });
+
+                    $('#saveChangesBtn').prop('disabled', !hasChanged);
+                });
+            }
+        });
         </script>
     </body>
 </html>
